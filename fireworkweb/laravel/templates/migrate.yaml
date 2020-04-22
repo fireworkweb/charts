@@ -1,12 +1,12 @@
 apiVersion: batch/v1
 kind: Job
 metadata:
-  name: {{ .Release.Name }}-pre-install-upgrade
+  name: {{ .Release.Name }}-migrate
   labels:
     app.kubernetes.io/name: {{ .Release.Name }}
-    app.kubernetes.io/instance: {{ .Release.Name }}-pre-install-upgrade
+    app.kubernetes.io/instance: {{ .Release.Name }}-migrate
     app.kubernetes.io/version: {{ .Values.version | quote }}
-    app.kubernetes.io/component: pre-install-upgrade
+    app.kubernetes.io/component: migrate
     helm.sh/chart: {{ .Chart.Name }}
     helm.sh/chart-version: {{ .Chart.Version }}
   annotations:
@@ -15,12 +15,12 @@ metadata:
 spec:
   template:
     metadata:
-      name: {{ .Release.Name }}-pre-install-upgrade
+      name: {{ .Release.Name }}-migrate
       labels:
         app.kubernetes.io/name: {{ .Release.Name }}
-        app.kubernetes.io/instance: {{ .Release.Name }}-pre-install-upgrade
+        app.kubernetes.io/instance: {{ .Release.Name }}-migrate
         app.kubernetes.io/version: {{ .Values.version | quote }}
-        app.kubernetes.io/component: pre-install-upgrade
+        app.kubernetes.io/component: migrate
         helm.sh/chart: {{ .Chart.Name }}
         helm.sh/chart-version: {{ .Chart.Version }}
     spec:
@@ -30,7 +30,7 @@ spec:
       {{- end }}
       restartPolicy: Never
       containers:
-      - name: pre-install-upgrade
+      - name: migrate
         image: "{{ .Values.app.image.repository }}:{{ .Values.app.image.tag }}"
         command: ["php", "artisan", "migrate", "--force", "--step"]
         envFrom:

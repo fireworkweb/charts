@@ -1,7 +1,4 @@
-# TODOS:
-# redis
-# mysql
-
+# App Version
 version: 1.0.0
 
 env:
@@ -33,24 +30,28 @@ worker:
 
 # optional
 cache:
-  replicas: 1
   image:
     repository: redis
-    tag: 4.0
+    tag: 5.0-alpine
     pullPolicy: Always
-    # pullSecret:
+  size: 1Gi
+  port: 6379
 database:
-  replicas: 1
   image:
     repository: mysql
     tag: 8.0
     pullPolicy: Always
-    # pullSecret:
+  size: 1Gi
+  port: 3306
+  env:
+    MYSQL_ROOT_PASSWORD: rootpass
+    MYSQL_DATABASE: database
+    MYSQL_USER: user
+    MYSQL_PASSWORD: pass
 
 # ingress:
 #   annotations:
 #     kubernetes.io/ingress.class: nginx
-#     cert-manager.io/issuer: letsencrypt-prod
 #   hosts:
 #     - chart-example.local
 #   tls:
