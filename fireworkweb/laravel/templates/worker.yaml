@@ -33,8 +33,10 @@ spec:
         - name: worker
           image: "{{ .Values.worker.image.repository }}:{{ .Values.worker.image.tag }}"
           imagePullPolicy: {{ .Values.worker.image.pullPolicy | default "IfNotPresent" }}
-          {{- with .Values.worker.command }}
-          command: {{ . | default ["php", "artisan", "horizon"] | toJson }}
+          {{- if hasKey .Values.worker "command" }}
+          command: {{ . | toJson }}
+          {{- else }}
+          command: ["php", "artisan", "horizon"]
           {{- end }}
           {{- with .Values.worker.args }}
           args: {{ . | toJson }}

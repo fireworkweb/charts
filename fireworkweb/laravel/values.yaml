@@ -2,7 +2,7 @@
 version: 1.0.0
 
 env:
-  APP_URL:
+  APP_URL: "http://localhost"
 
 storage:
   size: 1Gi
