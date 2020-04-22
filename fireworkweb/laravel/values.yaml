@@ -1,11 +1,16 @@
 # App Version
 version: 1.0.0
 
-env:
-  APP_URL: "http://localhost"
+# env:
+#   APP_URL: "http://erp.dev.k8s.fw.digital"
+#   DATABASE_HOST: "{{ .Release.Name }}-database"
+#   DATABASE_DATABASE: "database"
+#   DATABASE_USER: "user"
+#   DATABASE_PASS: "pass"
+#   REDIS_HOST: "{{ .Release.Name }}-cache"
 
-storage:
-  size: 1Gi
+# storage:
+#   size: 1Gi
 
 app:
   replicas: 1
@@ -32,25 +37,25 @@ worker:
     # pullSecret:
 
 # optional
-cache:
-  image:
-    repository: redis
-    tag: 5.0-alpine
-    pullPolicy: Always
-  size: 1Gi
-  port: 6379
-database:
-  image:
-    repository: mysql
-    tag: 8.0
-    pullPolicy: Always
-  size: 1Gi
-  port: 3306
-  env:
-    MYSQL_ROOT_PASSWORD: rootpass
-    MYSQL_DATABASE: database
-    MYSQL_USER: user
-    MYSQL_PASSWORD: pass
+# cache:
+#   image:
+#     repository: redis
+#     tag: 5.0-alpine
+#     pullPolicy: Always
+#   size: 1Gi
+#   port: 6379
+# database:
+#   image:
+#     repository: mysql
+#     tag: 8.0
+#     pullPolicy: Always
+#   size: 1Gi
+#   port: 3306
+#   env:
+#     MYSQL_ROOT_PASSWORD: rootpass
+#     MYSQL_DATABASE: database
+#     MYSQL_USER: user
+#     MYSQL_PASSWORD: pass
 
 # ingress:
 #   annotations:
