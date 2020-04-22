@@ -4,6 +4,9 @@ version: 1.0.0
 env:
   APP_URL:
 
+storage:
+  size: 1Gi
+
 app:
   replicas: 1
   image:
