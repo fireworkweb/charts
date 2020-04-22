@@ -1,0 +1,19 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Release.Name }}-app
+  labels:
+    app.kubernetes.io/name: {{ .Release.Name }}
+    app.kubernetes.io/instance: {{ .Release.Name }}-app
+    app.kubernetes.io/version: {{ .Values.version | quote }}
+    app.kubernetes.io/component: app
+    helm.sh/chart: {{ .Chart.Name }}
+    helm.sh/chart-version: {{ .Chart.Version }}
+spec:
+  type: ClusterIP
+  ports:
+    - port: {{ .Values.app.port }}
+      targetPort: {{ .Values.app.port }}
+  selector:
+    app.kubernetes.io/name: {{ .Release.Name }}
+    app.kubernetes.io/instance: {{ .Release.Name }}-app

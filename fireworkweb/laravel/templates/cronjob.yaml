@@ -1,0 +1,38 @@
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  name: {{ .Release.Name }}-schedule
+  labels:
+    app.kubernetes.io/name: {{ .Release.Name }}
+    app.kubernetes.io/instance: {{ .Release.Name }}-schedule
+    app.kubernetes.io/version: {{ .Values.version | quote }}
+    app.kubernetes.io/component: schedule
+    helm.sh/chart: {{ .Chart.Name }}
+    helm.sh/chart-version: {{ .Chart.Version }}
+spec:
+  concurrencyPolicy: Allow
+  schedule: "* * * * *"
+  jobTemplate:
+    metadata:
+      labels:
+        app.kubernetes.io/name: {{ .Release.Name }}
+        app.kubernetes.io/instance: {{ .Release.Name }}-schedule
+        app.kubernetes.io/version: {{ .Values.version | quote }}
+        app.kubernetes.io/component: schedule
+        helm.sh/chart: {{ .Chart.Name }}
+        helm.sh/chart-version: {{ .Chart.Version }}
+    spec:
+      template:
+        spec:
+          {{- with .Values.app.image.pullSecret }}
+          imagePullSecrets:
+            - name: {{ . }}
+          {{- end }}
+          restartPolicy: Never
+          containers:
+          - name: schedule
+            image: "{{ .Values.app.image.repository }}:{{ .Values.app.image.tag }}"
+            command: ["php", "artisan", "schedule:run"]
+            envFrom:
+            - secretRef:
+                name: {{ .Release.Name }}-env

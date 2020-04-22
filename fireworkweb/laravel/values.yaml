@@ -1,0 +1,59 @@
+# TODOS:
+# redis
+# mysql
+
+version: 1.0.0
+
+env:
+  APP_URL:
+
+app:
+  replicas: 1
+  image:
+    repository: fireworkweb/app
+    tag: latest
+    pullPolicy: Always
+    # pullSecret:
+  port: 9000
+http:
+  replicas: 1
+  image:
+    repository: fireworkweb/http
+    tag: latest
+    pullPolicy: Always
+    # pullSecret:
+  port: 80
+worker:
+  replicas: 1
+  image:
+    repository: fireworkweb/app
+    tag: latest
+    pullPolicy: Always
+    # pullSecret:
+
+# optional
+cache:
+  replicas: 1
+  image:
+    repository: redis
+    tag: 4.0
+    pullPolicy: Always
+    # pullSecret:
+database:
+  replicas: 1
+  image:
+    repository: mysql
+    tag: 8.0
+    pullPolicy: Always
+    # pullSecret:
+
+# ingress:
+#   annotations:
+#     kubernetes.io/ingress.class: nginx
+#     cert-manager.io/issuer: letsencrypt-prod
+#   hosts:
+#     - chart-example.local
+#   tls:
+#    - secretName: chart-example-tls
+#      hosts:
+#        - chart-example.local

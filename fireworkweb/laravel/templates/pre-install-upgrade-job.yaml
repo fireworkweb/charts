@@ -1,0 +1,38 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: {{ .Release.Name }}-pre-install-upgrade
+  labels:
+    app.kubernetes.io/name: {{ .Release.Name }}
+    app.kubernetes.io/instance: {{ .Release.Name }}-pre-install-upgrade
+    app.kubernetes.io/version: {{ .Values.version | quote }}
+    app.kubernetes.io/component: pre-install-upgrade
+    helm.sh/chart: {{ .Chart.Name }}
+    helm.sh/chart-version: {{ .Chart.Version }}
+  annotations:
+    helm.sh/hook: pre-install,pre-upgrade
+    helm.sh/hook-delete-policy: hook-succeeded
+spec:
+  template:
+    metadata:
+      name: {{ .Release.Name }}-pre-install-upgrade
+      labels:
+        app.kubernetes.io/name: {{ .Release.Name }}
+        app.kubernetes.io/instance: {{ .Release.Name }}-pre-install-upgrade
+        app.kubernetes.io/version: {{ .Values.version | quote }}
+        app.kubernetes.io/component: pre-install-upgrade
+        helm.sh/chart: {{ .Chart.Name }}
+        helm.sh/chart-version: {{ .Chart.Version }}
+    spec:
+      {{- with .Values.app.image.pullSecret }}
+      imagePullSecrets:
+        - name: {{ . }}
+      {{- end }}
+      restartPolicy: Never
+      containers:
+      - name: pre-install-upgrade
+        image: "{{ .Values.app.image.repository }}:{{ .Values.app.image.tag }}"
+        command: ["php", "artisan", "migrate", "--force", "--step"]
+        envFrom:
+          - secretRef:
+              name: {{ .Release.Name }}-env
