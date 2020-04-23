@@ -27,10 +27,10 @@ spec:
   rules:
     {{- range .Values.ingress.hosts }}
     - host: {{ . | quote }}
+    {{- end }}
       http:
         paths:
           - backend:
               serviceName: {{ .Release.Name }}-http
               servicePort: {{ .Values.http.port }}
-    {{- end }}
 {{- end }}
