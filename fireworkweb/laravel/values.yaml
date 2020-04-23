@@ -9,8 +9,9 @@ version: 1.0.0
 #   DATABASE_PASS: "pass"
 #   REDIS_HOST: "{{ .Release.Name }}-cache"
 
-# storage:
-#   size: 1Gi
+storage:
+  enabled: true
+  size: 1Gi
 
 app:
   replicas: 1
