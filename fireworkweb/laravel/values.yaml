@@ -12,7 +12,7 @@ version: 1.0.0
 storage:
   enabled: true
   size: 1Gi
-
+  mountPath: /app/storage
 app:
   replicas: 1
   image:
@@ -21,8 +21,6 @@ app:
     pullPolicy: Always
     # pullSecret:
   port: 9000
-  volume:
-    mountPath: /app/storage
 http:
   replicas: 1
   image:

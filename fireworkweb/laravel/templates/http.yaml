@@ -102,8 +102,12 @@ spec:
             - secretRef:
                 name: {{ .Release.Name }}-env
           volumeMounts:
-          - name: config
-            mountPath: /etc/nginx/conf.d
+            - name: config
+              mountPath: /etc/nginx/conf.d
+            {{- if .Values.storage.enabled }}
+            - name: volume
+              mountPath: {{ .Values.storage.mountPath }}
+            {{- end }}
           {{- with .Values.http.resources }}
           resources: {{ toYaml . | nindent 12 }}
           {{- end }}
@@ -111,6 +115,11 @@ spec:
         - name: config
           configMap:
             name: {{ .Release.Name }}-http
+        {{- if .Values.storage.enabled }}
+        - name: volume
+          persistentVolumeClaim:
+            claimName: {{ .Release.Name }}-storage
+        {{- end }}
       {{- with .Values.http.nodeSelector }}
       nodeSelector: {{ toYaml . | nindent 8 }}
       {{- end }}

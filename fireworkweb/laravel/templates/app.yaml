@@ -60,7 +60,7 @@ spec:
                 name: {{ .Release.Name }}-env
           {{- if .Values.storage.enabled }}
           volumeMounts:
-            - mountPath: {{ .Values.app.storage.mountPath }}
+            - mountPath: {{ .Values.storage.mountPath }}
               name: volume
           {{- end }}
           {{- with .Values.app.resources }}

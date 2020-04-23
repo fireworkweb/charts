@@ -58,9 +58,20 @@ spec:
           envFrom:
             - secretRef:
                 name: {{ .Release.Name }}-env
+          {{- if .Values.storage.enabled }}
+          volumeMounts:
+            - mountPath: {{ .Values.storage.mountPath }}
+              name: volume
+          {{- end }}
           {{- with .Values.worker.resources }}
           resources: {{ toYaml . | nindent 12 }}
           {{- end }}
+      {{- if .Values.storage.enabled }}
+      volumes:
+        - name: volume
+          persistentVolumeClaim:
+            claimName: {{ .Release.Name }}-storage
+      {{- end }}
       {{- with .Values.worker.nodeSelector }}
       nodeSelector: {{ toYaml . | nindent 8 }}
       {{- end }}
