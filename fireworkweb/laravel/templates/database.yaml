@@ -17,6 +17,8 @@ spec:
       app.kubernetes.io/instance: {{ .Release.Name }}-database
   template:
     metadata:
+      annotations:
+        rollme: {{ randAlphaNum 5 | quote }}
       labels:
         app.kubernetes.io/name: {{ .Release.Name }}
         app.kubernetes.io/instance: {{ .Release.Name }}-database
