@@ -21,6 +21,8 @@ app:
     pullPolicy: Always
     # pullSecret:
   port: 9000
+  volume:
+    mountPath: /app/storage
 http:
   replicas: 1
   image:
