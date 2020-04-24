@@ -10,7 +10,7 @@ metadata:
     helm.sh/chart: {{ .Chart.Name }}
     helm.sh/chart-version: {{ .Chart.Version }}
   annotations:
-    helm.sh/hook: pre-install,pre-upgrade
+    helm.sh/hook: post-install,post-upgrade
     helm.sh/hook-delete-policy: hook-succeeded
 spec:
   template:
