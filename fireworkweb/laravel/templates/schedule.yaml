@@ -30,9 +30,20 @@ spec:
           {{- end }}
           restartPolicy: Never
           containers:
-          - name: schedule
-            image: "{{ .Values.app.image.repository }}:{{ .Values.app.image.tag }}"
-            command: ["php", "artisan", "schedule:run"]
-            envFrom:
-            - secretRef:
-                name: {{ .Release.Name }}-env
+            - name: schedule
+              image: "{{ .Values.app.image.repository }}:{{ .Values.app.image.tag }}"
+              command: ["php", "artisan", "schedule:run"]
+              envFrom:
+                - secretRef:
+                    name: {{ .Release.Name }}-env
+              {{- if .Values.storage.enabled }}
+              volumeMounts:
+                - mountPath: {{ .Values.storage.mountPath }}
+                  name: volume
+              {{- end }}
+          {{- if .Values.storage.enabled }}
+          volumes:
+            - name: volume
+              persistentVolumeClaim:
+                claimName: {{ .Release.Name }}-storage
+          {{- end }}

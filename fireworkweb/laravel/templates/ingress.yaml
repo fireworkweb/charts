@@ -14,7 +14,7 @@ metadata:
   annotations: {{ toYaml . | nindent 4 }}
   {{- end }}
 spec:
-{{- if .Values.ingress.tls }}
+  {{- if .Values.ingress.tls }}
   tls:
   {{- range .Values.ingress.tls }}
     - hosts:
@@ -23,14 +23,14 @@ spec:
       {{- end }}
       secretName: {{ .secretName }}
   {{- end }}
-{{- end }}
+  {{- end }}
   rules:
     {{- range .Values.ingress.hosts }}
     - host: {{ . | quote }}
+    {{- end }}
       http:
         paths:
           - backend:
               serviceName: {{ .Release.Name }}-http
               servicePort: {{ .Values.http.port }}
-    {{- end }}
 {{- end }}

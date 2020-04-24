@@ -1,4 +1,4 @@
-{{- if .Values.storage }}
+{{- if .Values.storage.enabled }}
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
@@ -11,10 +11,6 @@ metadata:
     helm.sh/chart: {{ .Chart.Name }}
     helm.sh/chart-version: {{ .Chart.Version }}
 spec:
-  selector:
-    matchLabels:
-      app.kubernetes.io/name: {{ .Release.Name }}
-      app.kubernetes.io/instance: {{ .Release.Name }}-storage
   accessModes:
   - ReadWriteOnce
   resources:
