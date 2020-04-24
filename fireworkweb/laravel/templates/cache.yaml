@@ -17,8 +17,6 @@ spec:
       app.kubernetes.io/instance: {{ .Release.Name }}-cache
   template:
     metadata:
-      annotations:
-        rollme: {{ randAlphaNum 5 | quote }}
       labels:
         app.kubernetes.io/name: {{ .Release.Name }}
         app.kubernetes.io/instance: {{ .Release.Name }}-cache
@@ -58,8 +56,9 @@ spec:
                 port: {{ .Values.cache.port }}
           {{- end }}
           volumeMounts:
-            - mountPath: /data
-              name: volume
+            - name: volume
+              mountPath: /data
+              subPath: redis
           {{- with .Values.cache.resources }}
           resources: {{ toYaml . | nindent 12 }}
           {{- end }}

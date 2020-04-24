@@ -1,3 +1,4 @@
+{{- if .Values.worker }}
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -35,13 +36,13 @@ spec:
         - name: worker
           image: "{{ .Values.worker.image.repository }}:{{ .Values.worker.image.tag }}"
           imagePullPolicy: {{ .Values.worker.image.pullPolicy | default "IfNotPresent" }}
-          {{- if hasKey .Values.worker "command" }}
+          {{- with .Values.worker.command }}
           command: {{ . | toJson }}
-          {{- else }}
-          command: ["php", "artisan", "horizon"]
           {{- end }}
-          {{- with .Values.worker.args }}
+          {{- if hasKey .Values.worker "args" }}
           args: {{ . | toJson }}
+          {{- else }}
+          args: ["php", "artisan", "horizon"]
           {{- end }}
           {{- if hasKey .Values.worker "livenessProbe" }}
           livenessProbe: {{ toYaml . | nindent 12 }}
@@ -83,3 +84,4 @@ spec:
       {{- with .Values.worker.tolerations }}
       tolerations: {{ toYaml . | nindent 8 }}
       {{- end }}
+{{- end }}

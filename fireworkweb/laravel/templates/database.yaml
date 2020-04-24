@@ -17,8 +17,6 @@ spec:
       app.kubernetes.io/instance: {{ .Release.Name }}-database
   template:
     metadata:
-      annotations:
-        rollme: {{ randAlphaNum 5 | quote }}
       labels:
         app.kubernetes.io/name: {{ .Release.Name }}
         app.kubernetes.io/instance: {{ .Release.Name }}-database
@@ -44,25 +42,26 @@ spec:
           ports:
             - containerPort: {{ .Values.database.port }}
           {{- if hasKey .Values.database "livenessProbe" }}
-          livenessProbe: {{ toYaml . | nindent 12 }}
+          livenessProbe: {{ toYaml .Values.database.livenessProbe | nindent 12 }}
           {{- else }}
           livenessProbe:
             tcpSocket:
-                port: {{ .Values.database.port }}
+              port: {{ .Values.database.port }}
           {{- end }}
           {{- if hasKey .Values.database "readinessProbe" }}
-          readinessProbe: {{ toYaml . | nindent 12 }}
+          readinessProbe: {{ toYaml .Values.database.readinessProbe | nindent 12 }}
           {{- else }}
           readinessProbe:
             tcpSocket:
-                port: {{ .Values.database.port }}
+              port: {{ .Values.database.port }}
           {{- end }}
           envFrom:
             - secretRef:
                 name: {{ .Release.Name }}-database-env
           volumeMounts:
-            - mountPath: /var/lib/mysql
-              name: volume
+            - name: volume
+              mountPath: /var/lib/mysql
+              subPath: mysql
           {{- with .Values.database.resources }}
           resources: {{ toYaml . | nindent 12 }}
           {{- end }}

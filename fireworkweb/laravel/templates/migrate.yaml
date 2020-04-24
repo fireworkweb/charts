@@ -32,7 +32,7 @@ spec:
       containers:
         - name: migrate
           image: "{{ .Values.app.image.repository }}:{{ .Values.app.image.tag }}"
-          command: ["php", "artisan", "migrate", "--force", "--step"]
+          args: ["php", "artisan", "migrate", "--force", "--step"]
           envFrom:
             - secretRef:
                 name: {{ .Release.Name }}-env

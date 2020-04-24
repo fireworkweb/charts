@@ -9,33 +9,33 @@ version: 1.0.0
 #   DATABASE_PASS: "pass"
 #   REDIS_HOST: "{{ .Release.Name }}-cache"
 
-storage:
-  enabled: true
-  size: 1Gi
-  mountPath: /app/storage
-app:
-  replicas: 1
-  image:
-    repository: fireworkweb/app
-    tag: latest
-    pullPolicy: Always
-    # pullSecret:
-  port: 9000
-http:
-  replicas: 1
-  image:
-    repository: fireworkweb/http
-    tag: latest
-    pullPolicy: Always
-    # pullSecret:
-  port: 80
-worker:
-  replicas: 1
-  image:
-    repository: fireworkweb/app
-    tag: latest
-    pullPolicy: Always
-    # pullSecret:
+# storage:
+#   enabled: true
+#   size: 1Gi
+#   mountPath: /app/storage
+# app:
+#   replicas: 1
+#   image:
+#     repository: fireworkweb/app
+#     tag: latest
+#     pullPolicy: Always
+#     # pullSecret:
+#   port: 9000
+# http:
+#   replicas: 1
+#   image:
+#     repository: fireworkweb/http
+#     tag: latest
+#     pullPolicy: Always
+#     # pullSecret:
+#   port: 80
+# worker:
+#   replicas: 1
+#   image:
+#     repository: fireworkweb/app
+#     tag: latest
+#     pullPolicy: Always
+#     pullSecret:
 
 # optional
 # cache:
@@ -50,6 +50,7 @@ worker:
 #     repository: mysql
 #     tag: 8.0
 #     pullPolicy: Always
+#   args: ["--default-authentication-plugin=mysql_native_password"]
 #   size: 1Gi
 #   port: 3306
 #   env:
