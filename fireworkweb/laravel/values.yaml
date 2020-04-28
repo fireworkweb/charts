@@ -2,7 +2,7 @@
 version: 1.0.0
 
 # env:
-#   APP_URL: "http://erp.dev.k8s.fw.digital"
+#   APP_URL: "http://example.com"
 #   DATABASE_HOST: "{{ .Release.Name }}-database"
 #   DATABASE_DATABASE: "database"
 #   DATABASE_USER: "user"
@@ -62,9 +62,10 @@ version: 1.0.0
 # ingress:
 #   annotations:
 #     kubernetes.io/ingress.class: nginx
+#     cert-manager.io/cluster-issuer: acme
 #   hosts:
-#     - chart-example.local
+#     - example.com
 #   tls:
 #    - secretName: chart-example-tls
 #      hosts:
-#        - chart-example.local
+#        - example.com
