@@ -44,14 +44,14 @@ spec:
           ports:
             - containerPort: {{ .Values.app.port }}
           {{- if hasKey .Values.app "livenessProbe" }}
-          livenessProbe: {{ toYaml . | nindent 12 }}
+          livenessProbe: {{ toYaml .Values.app.livenessProbe | nindent 12 }}
           {{- else }}
           livenessProbe:
             tcpSocket:
                 port: {{ .Values.app.port }}
           {{- end }}
           {{- if hasKey .Values.app "readinessProbe" }}
-          readinessProbe: {{ toYaml . | nindent 12 }}
+          readinessProbe: {{ toYaml .Values.app.readinessProbe | nindent 12 }}
           {{- else }}
           readinessProbe:
             tcpSocket:
