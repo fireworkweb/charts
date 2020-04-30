@@ -42,14 +42,14 @@ spec:
           ports:
             - containerPort: {{ .Values.cache.port }}
           {{- if hasKey .Values.cache "livenessProbe" }}
-          livenessProbe: {{ toYaml . | nindent 12 }}
+          livenessProbe: {{ toYaml .Values.cache.livenessProbe | nindent 12 }}
           {{- else }}
           livenessProbe:
             tcpSocket:
                 port: {{ .Values.cache.port }}
           {{- end }}
           {{- if hasKey .Values.cache "readinessProbe" }}
-          readinessProbe: {{ toYaml . | nindent 12 }}
+          readinessProbe: {{ toYaml .Values.cache.readinessProbe | nindent 12 }}
           {{- else }}
           readinessProbe:
             tcpSocket:

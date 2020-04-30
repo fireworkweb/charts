@@ -40,19 +40,19 @@ spec:
           command: {{ . | toJson }}
           {{- end }}
           {{- if hasKey .Values.worker "args" }}
-          args: {{ . | toJson }}
+          args: {{ .Values.worker.args | toJson }}
           {{- else }}
-          args: ["php", "artisan", "horizon"]
+          args: ["php", "artisan", "queue:work"]
           {{- end }}
           {{- if hasKey .Values.worker "livenessProbe" }}
-          livenessProbe: {{ toYaml . | nindent 12 }}
+          livenessProbe: {{ toYaml .Values.worker.livenessProbe | nindent 12 }}
           {{- else }}
           # livenessProbe:
           #   tcpSocket:
           #       port: {{ .Values.worker.port }}
           {{- end }}
           {{- if hasKey .Values.worker "readinessProbe" }}
-          readinessProbe: {{ toYaml . | nindent 12 }}
+          readinessProbe: {{ toYaml .Values.worker.readinessProbe | nindent 12 }}
           {{- else }}
           # readinessProbe:
           #   tcpSocket:
