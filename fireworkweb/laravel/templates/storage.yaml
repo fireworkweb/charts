@@ -11,8 +11,11 @@ metadata:
     helm.sh/chart: {{ .Chart.Name }}
     helm.sh/chart-version: {{ .Chart.Version }}
 spec:
+  storageClassName: {{ .Values.storage.className }}
   accessModes:
-  - ReadWriteOnce
+  {{- range .Values.storage.accessModes }}
+    - {{ . }}
+  {{- end }}
   resources:
     requests:
       storage: {{ .Values.storage.size }}

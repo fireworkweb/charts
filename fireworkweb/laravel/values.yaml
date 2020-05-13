@@ -11,6 +11,9 @@ version: 1.0.0
 
 # storage:
 #   enabled: true
+#   storageClassName:
+#   accessModes:
+#     - ReadWriteMany
 #   size: 1Gi
 #   mountPath: /app/storage
 # app:
