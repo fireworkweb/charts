@@ -2,7 +2,16 @@ apiVersion: v1
 entries:
   laravel:
   - apiVersion: v2
-    created: "2020-05-14T21:27:31.27958-03:00"
+    created: "2020-05-15T13:07:08.939816-03:00"
+    description: Laravel Helm Chart
+    digest: b75b7e977f296969b039dca6f935ee55913b31bed56c7e98c6d5e620004366f8
+    name: laravel
+    type: application
+    urls:
+    - laravel-0.2.0.tgz
+    version: 0.2.0
+  - apiVersion: v2
+    created: "2020-05-15T13:07:08.93902-03:00"
     description: Laravel Helm Chart
     digest: e10035b80268d79e9244cc4dc3fe4b51d735355ba64e614773d6df8146808154
     name: laravel
@@ -10,4 +19,4 @@ entries:
     urls:
     - laravel-0.1.0.tgz
     version: 0.1.0
-generated: "2020-05-14T21:27:31.275025-03:00"
+generated: "2020-05-15T13:07:08.936888-03:00"
