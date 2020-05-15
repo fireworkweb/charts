@@ -1,0 +1,13 @@
+apiVersion: v1
+entries:
+  laravel:
+  - apiVersion: v2
+    created: "2020-05-14T21:25:17.684075-03:00"
+    description: Laravel Helm Chart
+    digest: e10035b80268d79e9244cc4dc3fe4b51d735355ba64e614773d6df8146808154
+    name: laravel
+    type: application
+    urls:
+    - laravel-0.1.0.tgz
+    version: 0.1.0
+generated: "2020-05-14T21:25:17.680884-03:00"
