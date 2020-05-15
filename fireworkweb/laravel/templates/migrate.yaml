@@ -1,3 +1,4 @@
+{{- if .Values.migrate.enabled }}
 apiVersion: batch/v1
 kind: Job
 metadata:
@@ -32,7 +33,7 @@ spec:
       containers:
         - name: migrate
           image: "{{ .Values.app.image.repository }}:{{ .Values.app.image.tag }}"
-          args: ["php", "artisan", "migrate", "--force", "--step"]
+          args: {{ .Values.migrate.args | toJson }}
           envFrom:
             - secretRef:
                 name: {{ .Release.Name }}-env
@@ -47,3 +48,4 @@ spec:
           persistentVolumeClaim:
             claimName: {{ .Release.Name }}-storage
       {{- end }}
+{{- end }}

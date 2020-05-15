@@ -1,4 +1,4 @@
-{{- if .Values.worker }}
+{{- if .Values.worker.enabled }}
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -39,11 +39,7 @@ spec:
           {{- with .Values.worker.command }}
           command: {{ . | toJson }}
           {{- end }}
-          {{- if hasKey .Values.worker "args" }}
           args: {{ .Values.worker.args | toJson }}
-          {{- else }}
-          args: ["php", "artisan", "queue:work"]
-          {{- end }}
           {{- if hasKey .Values.worker "livenessProbe" }}
           livenessProbe: {{ toYaml .Values.worker.livenessProbe | nindent 12 }}
           {{- else }}

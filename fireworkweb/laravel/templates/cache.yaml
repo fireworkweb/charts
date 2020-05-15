@@ -1,4 +1,4 @@
-{{- if .Values.cache }}
+{{- if .Values.cache.enabled }}
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -88,11 +88,14 @@ metadata:
     helm.sh/chart: {{ .Chart.Name }}
     helm.sh/chart-version: {{ .Chart.Version }}
 spec:
+  {{- if hasKey .Values.cache.storage "className" }}
+  storageClassName: {{ .Values.cache.storage.className }}
+  {{- end }}
   accessModes:
   - ReadWriteOnce
   resources:
     requests:
-      storage: {{ .Values.cache.size }}
+      storage: {{ .Values.cache.storage.size }}
 ---
 apiVersion: v1
 kind: Service

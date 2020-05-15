@@ -1,4 +1,4 @@
-{{- if .Values.database }}
+{{- if .Values.database.enabled }}
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -91,11 +91,14 @@ metadata:
     helm.sh/chart: {{ .Chart.Name }}
     helm.sh/chart-version: {{ .Chart.Version }}
 spec:
+  {{- if hasKey .Values.database.storage "className" }}
+  storageClassName: {{ .Values.database.storage.className }}
+  {{- end }}
   accessModes:
   - ReadWriteOnce
   resources:
     requests:
-      storage: {{ .Values.database.size }}
+      storage: {{ .Values.database.storage.size }}
 ---
 apiVersion: v1
 kind: Secret

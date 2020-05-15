@@ -9,58 +9,71 @@ version: 1.0.0
 #   DATABASE_PASS: "pass"
 #   REDIS_HOST: "{{ .Release.Name }}-cache"
 
-# storage:
-#   enabled: true
-#   storageClassName:
-#   accessModes:
-#     - ReadWriteMany
-#   size: 1Gi
-#   mountPath: /app/storage
-# app:
-#   replicas: 1
-#   image:
-#     repository: fireworkweb/app
-#     tag: latest
-#     pullPolicy: Always
-#     # pullSecret:
-#   port: 9000
-# http:
-#   replicas: 1
-#   image:
-#     repository: fireworkweb/http
-#     tag: latest
-#     pullPolicy: Always
-#     # pullSecret:
-#   port: 80
-# worker:
-#   replicas: 1
-#   image:
-#     repository: fireworkweb/app
-#     tag: latest
-#     pullPolicy: Always
-#     pullSecret:
+storage:
+  enabled: false
+  # storageClassName:
+  accessModes:
+    - ReadWriteOnce
+  size: 1Gi
+  mountPath: /app/storage
+app:
+  replicas: 1
+  image:
+    repository: fireworkweb/app
+    tag: latest
+    pullPolicy: Always
+    # pullSecret:
+  port: 9000
+http:
+  replicas: 1
+  image:
+    repository: fireworkweb/http
+    tag: latest
+    pullPolicy: Always
+    # pullSecret:
+  port: 80
+migrate:
+  enabled: true
+  args: ["php", "artisan", "migrate", "--force", "--step"]
+worker:
+  enabled: true
+  replicas: 1
+  image:
+    repository: fireworkweb/app
+    tag: latest
+    pullPolicy: Always
+    # pullSecret:
+  args: ["php", "artisan", "queue:work"]
+schedule:
+  enabled: true
 
 # optional
-# cache:
-#   image:
-#     repository: redis
-#     tag: 5.0-alpine
-#     pullPolicy: Always
-#   size: 1Gi
-#   port: 6379
-# database:
-#   image:
-#     repository: mysql
-#     tag: 8.0
-#     pullPolicy: Always
-#   args: ["--default-authentication-plugin=mysql_native_password"]
-#   size: 1Gi
-#   port: 3306
-#   env:
-#     MYSQL_ROOT_PASSWORD: rootpass
-#     MYSQL_DATABASE: database
-#     MYSQL_USER: user
-#     MYSQL_PASSWORD: pass
+cache:
+  enabled: true
+  image:
+    repository: redis
+    tag: 5.0-alpine
+    pullPolicy: Always
+  storage:
+    size: 1Gi
+    # className:
+  port: 6379
+database:
+  enabled: true
+  image:
+    repository: mysql
+    tag: 8.0
+    pullPolicy: Always
+  args: ["--default-authentication-plugin=mysql_native_password"]
+  storage:
+    size: 1Gi
+    # className:
+  port: 3306
+  env:
+    MYSQL_ROOT_PASSWORD: rootpass
+    MYSQL_DATABASE: database
+    MYSQL_USER: user
+    MYSQL_PASSWORD: pass
 
 # ingress:
 #   annotations:
