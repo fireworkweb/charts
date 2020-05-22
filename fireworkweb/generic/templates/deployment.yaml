@@ -11,9 +11,11 @@ spec:
     matchLabels: {{ include "generic.selectorLabels" . | nindent 6 }}
   template:
     metadata:
-      {{- with .Values.annotations }}
-      annotations: {{ toYaml . | nindent 8 }}
-      {{- end }}
+      annotations:
+        rollme: {{ randAlphaNum 5 | quote }}
+        {{- with .Values.annotations }}
+        {{ toYaml . | nindent 8 }}
+        {{- end }}
       labels: {{ include "generic.selectorLabels" . | nindent 8 }}
     spec:
       {{- with .Values.imagePullSecrets }}
@@ -23,7 +25,7 @@ spec:
       {{- with .Values.securityContext }}
       securityContext: {{ toYaml . | nindent 8 }}
       {{- end }}
-      {{- with .Values.initContainers }}
+      {{- if .Values.initContainers }}
       initContainers:
         {{- range $value := .Values.initContainers }}
         - name: {{ $value.name }}
@@ -34,6 +36,12 @@ spec:
           {{- with $value.args }}
           args: {{ . | toJson }}
           {{- end }}
+          {{- with $value.envFrom }}
+          envFrom: {{ toYaml . | nindent 12 }}
+          {{- end }}
+          {{- with $value.volumeMounts }}
+          volumeMounts: {{ toYaml . | nindent 12 }}
+          {{- end }}
           {{- with $value.resources }}
           resources: {{ toYaml . | nindent 12 }}
           {{- end }}
@@ -41,7 +49,7 @@ spec:
       {{- end }}
       containers:
         {{- range $value := .Values.containers }}
-        - name: {{ $value.Name }}
+        - name: {{ $value.name }}
           image: "{{ $value.image.repository }}:{{ $value.image.tag }}"
           imagePullPolicy: {{ $value.image.pullPolicy }}
           ports: {{ toYaml $value.ports | nindent 12 }}
@@ -56,9 +64,18 @@ spec:
           {{- with $value.securityContext }}
           securityContext: {{ toYaml . | nindent 12 }}
           {{- end }}
+          {{- with $value.envFrom }}
+          envFrom: {{ toYaml . | nindent 12 }}
+          {{- end }}
+          {{- with $value.volumeMounts }}
+          volumeMounts: {{ toYaml . | nindent 12 }}
+          {{- end }}
           {{- with $value.resources }}
           resources: {{ toYaml . | nindent 12 }}
           {{- end }}
+      {{- end }}
+      {{- with .Values.volumes }}
+      volumes: {{ toYaml . | nindent 8 }}
       {{- end }}
       {{- with .Values.nodeSelector }}
       nodeSelector: {{ toYaml . | nindent 8 }}

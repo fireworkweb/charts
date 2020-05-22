@@ -1,8 +1,8 @@
-# Default values for generic.
-# This is a YAML-formatted file.
-# Declare variables to be passed into your templates.
-
 replicaCount: 1
+
+# imagePullSecrets:
+nameOverride: ""
+fullnameOverride: ""
 
 # initContainers:
 #   - name: init
@@ -12,6 +12,15 @@ replicaCount: 1
 #       tag: "latest"
 #     # command: []
 #     # args: []
+#     # envFrom:
+#     #   - secretRef:
+#     #       name: env
+#     # volumeMounts:
+#     #   - name: config
+#     #     mountPath:
+#     #   - name: volume
+#     #     mountPath:
+#     #     subPath:
 #     # resources:
 #     #   limits:
 #     #     cpu: 100m
@@ -43,6 +52,15 @@ containers:
     #   readOnlyRootFilesystem: true
     #   runAsNonRoot: true
     #   runAsUser: 1000
+    # envFrom:
+    #   - secretRef:
+    #       name: env
+    # volumeMounts:
+    #   - name: config
+    #     mountPath:
+    #   - name: volume
+    #     mountPath:
+    #     subPath:
     # resources:
     #   limits:
     #     cpu: 100m
@@ -51,9 +69,30 @@ containers:
     #     cpu: 100m
     #     memory: 128Mi
 
-imagePullSecrets: []
-nameOverride: ""
-fullnameOverride: ""
+# configMaps:
+#   - name: nginx
+#     data:
+#       file: "content"
+
+# secrets:
+#   - name: env
+#     data:
+#       SOME_ENV: "example"
+
+# storages:
+#   - name: storage
+#     accessModes:
+#       - ReadWriteOnce
+#     size: 1Gi
+#     # className:
+
+# volumes:
+#   - name: config
+#     configMap:
+#       name: config
+#   - name: volume
+#     persistentVolumeClaim:
+#       claimName: storage
 
 serviceAccount:
   # Specifies whether a service account should be created
@@ -72,6 +111,7 @@ serviceAccount:
 service:
   type: ClusterIP
   port: 80
+  targetPort: 80
 
 ingress:
   enabled: false
