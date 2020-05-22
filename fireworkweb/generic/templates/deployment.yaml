@@ -11,7 +11,7 @@ spec:
     matchLabels: {{ include "generic.selectorLabels" . | nindent 6 }}
   template:
     metadata:
-      {{- with .Values.podAnnotations }}
+      {{- with .Values.annotations }}
       annotations: {{ toYaml . | nindent 8 }}
       {{- end }}
       labels: {{ include "generic.selectorLabels" . | nindent 8 }}
@@ -20,22 +20,46 @@ spec:
       imagePullSecrets: {{ toYaml . | nindent 8 }}
       {{- end }}
       serviceAccountName: {{ include "generic.serviceAccountName" . }}
-      {{- with .Values.podSecurityContext }}
+      {{- with .Values.securityContext }}
       securityContext: {{ toYaml . | nindent 8 }}
       {{- end }}
-      containers:
-        - name: {{ .Chart.Name }}
-          {{- with .Values.podSecurityContext }}
-          securityContext: {{ toYaml . | nindent 12 }}
+      {{- with .Values.initContainers }}
+      initContainers:
+        {{- range $value := .Values.initContainers }}
+        - name: {{ $value.name }}
+          image: "{{ $value.image.repository }}:{{ $value.image.tag }}"
+          {{- with $value.command }}
+          command: {{ . | toJson }}
           {{- end }}
-          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
-          imagePullPolicy: {{ .Values.image.pullPolicy }}
-          ports: {{ toYaml .Values.ports | nindent 12 }}
-          livenessProbe: {{ toYaml .Values.livenessProbe | nindent 12 }}
-          readinessProbe: {{ toYaml .Values.readinessProbe | nindent 12 }}
-          {{- with .Values.podSecurityContext }}
+          {{- with $value.args }}
+          args: {{ . | toJson }}
+          {{- end }}
+          {{- with $value.resources }}
           resources: {{ toYaml . | nindent 12 }}
           {{- end }}
+        {{- end }}
+      {{- end }}
+      containers:
+        {{- range $value := .Values.containers }}
+        - name: {{ $value.Name }}
+          image: "{{ $value.image.repository }}:{{ $value.image.tag }}"
+          imagePullPolicy: {{ $value.image.pullPolicy }}
+          ports: {{ toYaml $value.ports | nindent 12 }}
+          livenessProbe: {{ toYaml $value.livenessProbe | nindent 12 }}
+          readinessProbe: {{ toYaml $value.readinessProbe | nindent 12 }}
+          {{- with $value.command }}
+          command: {{ . | toJson }}
+          {{- end }}
+          {{- with $value.args }}
+          args: {{ . | toJson }}
+          {{- end }}
+          {{- with $value.securityContext }}
+          securityContext: {{ toYaml . | nindent 12 }}
+          {{- end }}
+          {{- with $value.resources }}
+          resources: {{ toYaml . | nindent 12 }}
+          {{- end }}
+      {{- end }}
       {{- with .Values.nodeSelector }}
       nodeSelector: {{ toYaml . | nindent 8 }}
       {{- end }}
