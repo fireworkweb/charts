@@ -5,19 +5,19 @@
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: "{{ $fullName }}-{{ $storage.name }}"
+  name: "{{ $fullName }}-{{ .name }}"
   labels: {{ $labels | nindent 4 }}
 spec:
-  {{- if $storage.className }}
-  storageClassName: {{ $storage.className }}
+  {{- if .className }}
+  storageClassName: {{ .className }}
   {{- end }}
   accessModes:
-  {{- range $storage.accessModes }}
+  {{- range .accessModes }}
     - {{ . }}
   {{- end }}
   resources:
     requests:
-      storage: {{ $storage.size }}
+      storage: {{ .size }}
 ---
 {{- end }}
 {{- end }}

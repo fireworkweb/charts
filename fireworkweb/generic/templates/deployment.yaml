@@ -36,6 +36,9 @@ spec:
           {{- with $value.args }}
           args: {{ . | toJson }}
           {{- end }}
+          {{- with $value.env }}
+          env: {{ toYaml . | nindent 12 }}
+          {{- end }}
           {{- with $value.envFrom }}
           envFrom: {{ toYaml . | nindent 12 }}
           {{- end }}
@@ -63,6 +66,9 @@ spec:
           {{- end }}
           {{- with $value.securityContext }}
           securityContext: {{ toYaml . | nindent 12 }}
+          {{- end }}
+          {{- with $value.env }}
+          env: {{ toYaml . | nindent 12 }}
           {{- end }}
           {{- with $value.envFrom }}
           envFrom: {{ toYaml . | nindent 12 }}
