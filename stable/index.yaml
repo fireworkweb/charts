@@ -2,7 +2,15 @@ apiVersion: v1
 entries:
   generic:
   - apiVersion: v2
-    created: "2020-05-26T00:30:53.738528-03:00"
+    created: "2020-05-26T00:34:22.681988-03:00"
+    description: Generic Chart
+    digest: 61170351e7d160e5be0f6549d8f16abefcac7bf8bc45318be6adefaccdaac499
+    name: generic
+    urls:
+    - generic-1.3.1.tgz
+    version: 1.3.1
+  - apiVersion: v2
+    created: "2020-05-26T00:34:22.681463-03:00"
     description: Generic Chart
     digest: a439bed1ea4611415a18435ed6c93c50df4d1c6b3974d5abe7b19125d7b28ea4
     name: generic
@@ -10,7 +18,7 @@ entries:
     - generic-1.3.0.tgz
     version: 1.3.0
   - apiVersion: v2
-    created: "2020-05-26T00:30:53.73768-03:00"
+    created: "2020-05-26T00:34:22.680217-03:00"
     description: Generic Chart
     digest: 82ac22d1b439da2e47cb8f5ec74e5a0a6e8c36ea49a0f2aa8ffe9a639bdf034c
     name: generic
@@ -19,7 +27,7 @@ entries:
     - generic-1.2.0.tgz
     version: 1.2.0
   - apiVersion: v2
-    created: "2020-05-26T00:30:53.736744-03:00"
+    created: "2020-05-26T00:34:22.676727-03:00"
     description: Generic Chart
     digest: 4ff119b3b9bd011c52ee9ad686389c9213a76d16ee872cbf48602913f5cad5c2
     name: generic
@@ -28,7 +36,7 @@ entries:
     - generic-1.0.0.tgz
     version: 1.0.0
   - apiVersion: v2
-    created: "2020-05-26T00:30:53.735859-03:00"
+    created: "2020-05-26T00:34:22.675769-03:00"
     description: Generic Chart
     digest: 52ff98e1b4c28548fcca74d1505e1cc05449f66c28408e15dee04b82e3004ee2
     name: generic
@@ -38,7 +46,7 @@ entries:
     version: 0.1.0
   laravel:
   - apiVersion: v2
-    created: "2020-05-26T00:30:53.741198-03:00"
+    created: "2020-05-26T00:34:22.684673-03:00"
     description: Laravel Helm Chart
     digest: b75b7e977f296969b039dca6f935ee55913b31bed56c7e98c6d5e620004366f8
     name: laravel
@@ -47,7 +55,7 @@ entries:
     - laravel-0.2.0.tgz
     version: 0.2.0
   - apiVersion: v2
-    created: "2020-05-26T00:30:53.739768-03:00"
+    created: "2020-05-26T00:34:22.683207-03:00"
     description: Laravel Helm Chart
     digest: e10035b80268d79e9244cc4dc3fe4b51d735355ba64e614773d6df8146808154
     name: laravel
@@ -55,4 +63,4 @@ entries:
     urls:
     - laravel-0.1.0.tgz
     version: 0.1.0
-generated: "2020-05-26T00:30:53.731231-03:00"
+generated: "2020-05-26T00:34:22.673632-03:00"
