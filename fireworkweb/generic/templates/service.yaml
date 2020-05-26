@@ -1,6 +1,7 @@
 {{- if .Values.services }}
 {{- $fullName := include "generic.fullname" . -}}
 {{- $labels := include "generic.labels" . -}}
+{{- $selectorLabels := include "generic.selectorLabels" . -}}
 {{- range $service := .Values.services }}
 apiVersion: v1
 kind: Service
@@ -12,6 +13,6 @@ spec:
   ports:
     - port: {{ .port }}
       targetPort: {{ .targetPort }}
-  selector: {{ $labels | nindent 4 }}
+  selector: {{ $selectorLabels | nindent 4 }}
 {{- end }}
 {{- end }}
