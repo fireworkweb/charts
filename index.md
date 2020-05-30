@@ -19,5 +19,5 @@ $ helm repo update
 ### Deploy with default config
 
 ```bash
-$ helm upgrade --install app fireworkweb/loki-stack
+$ helm upgrade --install app fireworkweb/laravel
 ```
