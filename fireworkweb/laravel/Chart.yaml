@@ -1,5 +1,0 @@
-apiVersion: v2
-name: laravel
-description: Laravel Helm Chart
-type: application
-version: 0.2.0

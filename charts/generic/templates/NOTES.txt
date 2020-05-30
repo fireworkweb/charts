@@ -3,7 +3,7 @@
   {{- range $ingress := .Values.ingresses }}
     {{- range $host := .hosts }}
       {{- range .paths }}
-      http{{ if $ingress.tls }}s{{ end }}://{{ $host.host }}{{ . }}
+      http{{ if $ingress.tls }}s{{ end }}://{{ $host.host }}{{ .path }}
       {{- end }}
     {{- end }}
   {{- end }}

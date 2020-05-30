@@ -1,0 +1,8 @@
+apiVersion: v2
+name: laravel
+description: Laravel Helm Chart
+version: 1.0.0
+dependencies:
+- name: generic
+  version: "1.3.2"
+  repository: "https://fireworkweb.github.io/charts/stable"
