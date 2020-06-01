@@ -1,7 +1,8 @@
+{{- $fullName := include "generic.fullname" . -}}
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ include "generic.fullname" . }}
+  name: {{ $fullName }}
   labels: {{ include "generic.labels" . | nindent 4 }}
 spec:
   replicas: {{ .Values.replicaCount }}
@@ -26,7 +27,7 @@ spec:
       {{- if .Values.initContainers }}
       initContainers:
         {{- range $value := .Values.initContainers }}
-        - name: {{ $value.name }}
+        - name: {{ $value.name | default "default" }}
           image: "{{ $value.image.repository }}:{{ $value.image.tag }}"
           {{- with $value.command }}
           command: {{ . | toJson }}
@@ -38,7 +39,26 @@ spec:
           env: {{ toYaml . | nindent 12 }}
           {{- end }}
           {{- with $value.envFrom }}
-          envFrom: {{ toYaml . | nindent 12 }}
+          envFrom:
+            {{- range $envFrom := . }}
+            {{- if $envFrom.secretRef }}
+            - secretRef:
+                {{- if $envFrom.secretRef.fullName }}
+                name: {{ $envFrom.secretRef.fullName }}
+                {{- else }}
+                name: "{{ $fullName }}-{{ $envFrom.secretRef.name }}"
+                {{- end }}
+            {{- else if $envFrom.configMapRef }}
+            - configMapRef:
+                {{- if $envFrom.configMapRef.fullName }}
+                name: {{ $envFrom.configMapRef.fullName }}
+                {{- else }}
+                name: "{{ $fullName }}-{{ $envFrom.configMapRef.name }}"
+                {{- end }}
+            {{- else }}
+            - {{ toYaml . | indent 14 }}
+            {{- end }}
+            {{- end }}
           {{- end }}
           {{- with $value.volumeMounts }}
           volumeMounts: {{ toYaml . | nindent 12 }}
@@ -50,12 +70,12 @@ spec:
       {{- end }}
       containers:
         {{- range $value := .Values.containers }}
-        - name: {{ $value.name }}
+        - name: {{ $value.name | default "default" }}
           image: "{{ $value.image.repository }}:{{ $value.image.tag }}"
           imagePullPolicy: {{ $value.image.pullPolicy }}
           ports: {{ toYaml $value.ports | nindent 12 }}
           livenessProbe: {{ toYaml $value.livenessProbe | nindent 12 }}
-          readinessProbe: {{ toYaml $value.readinessProbe | nindent 12 }}
+          readinessProbe: {{ toYaml ($value.readinessProbe | default $value.livenessProbe) | nindent 12 }}
           {{- with $value.command }}
           command: {{ . | toJson }}
           {{- end }}
@@ -69,7 +89,26 @@ spec:
           env: {{ toYaml . | nindent 12 }}
           {{- end }}
           {{- with $value.envFrom }}
-          envFrom: {{ toYaml . | nindent 12 }}
+          envFrom:
+            {{- range $envFrom := . }}
+            {{- if $envFrom.secretRef }}
+            - secretRef:
+                {{- if $envFrom.secretRef.fullName }}
+                name: {{ $envFrom.secretRef.fullName }}
+                {{- else }}
+                name: "{{ $fullName }}-{{ $envFrom.secretRef.name }}"
+                {{- end }}
+            {{- else if $envFrom.configMapRef }}
+            - configMapRef:
+                {{- if $envFrom.configMapRef.fullName }}
+                name: {{ $envFrom.configMapRef.fullName }}
+                {{- else }}
+                name: "{{ $fullName }}-{{ $envFrom.configMapRef.name }}"
+                {{- end }}
+            {{- else }}
+            - {{ toYaml . | indent 14 }}
+            {{- end }}
+            {{- end }}
           {{- end }}
           {{- with $value.volumeMounts }}
           volumeMounts: {{ toYaml . | nindent 12 }}
@@ -79,7 +118,28 @@ spec:
           {{- end }}
       {{- end }}
       {{- with .Values.volumes }}
-      volumes: {{ toYaml . | nindent 8 }}
+      volumes:
+        {{- range $volume := . }}
+        {{- if $volume.configMap }}
+        - name: {{ .name }}
+          configMap:
+            {{- if $volume.configMap.fullName }}
+            name: {{ $volume.configMap.fullName }}
+            {{- else }}
+            name: "{{ $fullName }}-{{ $volume.configMap.name }}"
+            {{- end }}
+        {{- else if $volume.persistentVolumeClaim }}
+        - name: {{ .name }}
+          persistentVolumeClaim:
+            {{- if $volume.persistentVolumeClaim.fullClaimName }}
+            claimName: {{ $volume.persistentVolumeClaim.fullClaimName }}
+            {{- else }}
+            claimName: "{{ $fullName }}-{{ $volume.persistentVolumeClaim.claimName }}"
+            {{- end }}
+        {{- else }}
+        - {{ toYaml . | indent 10 }}
+        {{- end }}
+        {{- end }}
       {{- end }}
       {{- with .Values.nodeSelector }}
       nodeSelector: {{ toYaml . | nindent 8 }}

@@ -1,87 +1,129 @@
-# App Version
-version: 1.0.0
+mysql:
+  # asdadsa:
 
-# env:
-#   APP_URL: "http://example.com"
-#   DATABASE_HOST: "{{ .Release.Name }}-database"
-#   DATABASE_DATABASE: "database"
-#   DATABASE_USER: "user"
-#   DATABASE_PASS: "pass"
-#   REDIS_HOST: "{{ .Release.Name }}-cache"
+redis:
+  # asdadsa:
 
-storage:
-  enabled: false
-  # storageClassName:
-  accessModes:
-    - ReadWriteOnce
-  size: 1Gi
-  mountPath: /app/storage
-app:
-  replicas: 1
-  image:
-    repository: fireworkweb/app
-    tag: latest
-    pullPolicy: Always
-    # pullSecret:
-  port: 9000
-http:
-  replicas: 1
-  image:
-    repository: fireworkweb/http
-    tag: latest
-    pullPolicy: Always
-    # pullSecret:
-  port: 80
-migrate:
-  enabled: true
-  args: ["php", "artisan", "migrate", "--force", "--step"]
-worker:
-  enabled: true
-  replicas: 1
-  image:
-    repository: fireworkweb/app
-    tag: latest
-    pullPolicy: Always
-    # pullSecret:
-  args: ["php", "artisan", "queue:work"]
-schedule:
-  enabled: true
+generic:
+  # imagePullSecrets:
 
-# optional
-cache:
-  enabled: true
-  image:
-    repository: redis
-    tag: 5.0-alpine
-    pullPolicy: Always
-  storage:
-    size: 1Gi
-    # className:
-  port: 6379
-database:
-  enabled: true
-  image:
-    repository: mysql
-    tag: 8.0
-    pullPolicy: Always
-  args: ["--default-authentication-plugin=mysql_native_password"]
-  storage:
-    size: 1Gi
-    # className:
-  port: 3306
-  env:
-    MYSQL_ROOT_PASSWORD: rootpass
-    MYSQL_DATABASE: database
-    MYSQL_USER: user
-    MYSQL_PASSWORD: pass
+  initContainers:
+    # - name: init-storage
+    #   image:
+    #     repository:
+    #     pullPolicy: Always
+    #     tag:
+    #   command: ["/bin/sh", "-c", "cp -r /app/storage/* /tmp/storage/ && chown -R fwd. /tmp/storage"]
+    #   envFrom:
+    #     - secretRef:
+    #         name: env
+    #   volumeMounts:
+    #     - name: storage
+    #       mountPath: /tmp/storage
+    #       subPath: storage
+    - name: migrate
+      image:
+        repository:
+        pullPolicy: Always
+        tag:
+      args: ["php", "artisan", "migrate", "--force", "--step"]
+      envFrom:
+        - secretRef:
+            name: env
+      # volumeMounts:
+      #   - name: storage
+      #     mountPath: /app/storage
+      #     subPath: storage
 
-# ingress:
-#   annotations:
-#     kubernetes.io/ingress.class: nginx
-#     cert-manager.io/cluster-issuer: acme
-#   hosts:
-#     - example.com
-#   tls:
-#    - secretName: chart-example-tls
-#      hosts:
-#        - example.com
+  containers:
+    - name: app
+      image:
+        repository:
+        pullPolicy: Always
+        tag:
+      ports:
+        - containerPort: 9000
+      livenessProbe:
+        tcpSocket:
+          port: 9000
+      readinessProbe:
+        tcpSocket:
+          port: 9000
+      envFrom:
+        - secretRef:
+            name: env
+      # volumeMounts:
+      #   - name: storage
+      #     mountPath: /app/storage
+      #     subPath: storage
+    - name: http
+      image:
+        repository:
+        pullPolicy: Always
+        tag:
+      ports:
+        - containerPort: 80
+      livenessProbe:
+        tcpSocket:
+          port: 80
+      readinessProbe:
+        tcpSocket:
+          port: 80
+      envFrom:
+        - secretRef:
+            name: env
+      # volumeMounts:
+      #   - name: storage
+      #     mountPath: /app/storage
+      #     subPath: storage
+    - name: worker
+      image:
+        repository:
+        pullPolicy: Always
+        tag:
+      args: ["php", "artisan", "queue:work"]
+      envFrom:
+        - secretRef:
+            name: env
+      # volumeMounts:
+      #   - name: storage
+      #     mountPath: /app/storage
+      #     subPath: storage
+
+  secrets:
+    - name: env
+      data:
+        LOG_CHANNEL: "stderr"
+        APP_NAME: "Example"
+        # APP_ENV: "development"
+        # APP_KEY: ""
+        # APP_DEBUG: "true"
+        # APP_URL: "https://url"
+
+  # storages:
+  #   - name: storage
+  #     accessModes:
+  #       - ReadWriteOnce
+  #     size: 1Gi
+
+  # volumes:
+  #   - name: storage
+  #     persistentVolumeClaim:
+  #       claimName: storage
+
+  services:
+    - type: ClusterIP
+      port: 80
+
+  # ingresses:
+  #   - hosts:
+  #       - host: chart-example.local
+  #         paths:
+  #           - serviceName: default
+  #             servicePort: 80
+  #     # annotations:
+  #     #   kubernetes.io/ingress.class: nginx
+  #     # tls:
+  #     #   - secretName: chart-example-tls
+  #     #     hosts:
+  #     #       - chart-example.local

@@ -6,13 +6,17 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: "{{ $fullName }}-{{ $service.name }}"
+  {{- if .fullName }}
+  name: {{ .fullName }}
+  {{- else }}
+  name: "{{ $fullName }}-{{ .name | default "default" }}"
+  {{- end }}
   labels: {{ $labels | nindent 4 }}
 spec:
   type: {{ .type }}
   ports:
     - port: {{ .port }}
-      targetPort: {{ .targetPort }}
+      targetPort: {{ .targetPort | default .port }}
   selector: {{ $selectorLabels | nindent 4 }}
 ---
 {{- end }}

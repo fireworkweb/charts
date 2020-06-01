@@ -5,7 +5,11 @@
 apiVersion: networking.k8s.io/v1beta1
 kind: Ingress
 metadata:
-  name: "{{ $fullName }}-{{ .name }}"
+  {{- if .fullName }}
+  name: {{ .fullName }}
+  {{- else }}
+  name: "{{ $fullName }}-{{ .name | default "default" }}"
+  {{- end }}
   labels: {{ $labels | nindent 4 }}
   {{- with .annotations }}
   annotations: {{ toYaml . | nindent 4 }}
@@ -29,7 +33,11 @@ spec:
           {{- range .paths }}
           - path: {{ .path | default "/" }}
             backend:
+              {{- if .fullServiceName }}
+              serviceName: {{ .fullServiceName }}
+              {{- else }}
               serviceName: "{{ $fullName }}-{{ .serviceName }}"
+              {{- end }}
               servicePort: {{ .servicePort }}
           {{- end }}
     {{- end }}

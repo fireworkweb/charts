@@ -5,13 +5,17 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: "{{ $fullName }}-{{ $configMap.name }}"
+  {{- if .fullName }}
+  name: {{ .fullName }}
+  {{- else }}
+  name: "{{ $fullName }}-{{ .name | default "default" }}"
+  {{- end }}
   labels: {{ $labels | nindent 4 }}
 data:
-  {{- range $key, $value := $configMap.data }}
+  {{- range $key, $value := .data }}
   {{ $key }}: {{ $value }}
   {{- end }}
-  {{- range $key, $value := $configMap.files }}
+  {{- range $key, $value := .files }}
   {{ $key }}: | {{ $value | nindent 4 }}
   {{- end }}
 ---

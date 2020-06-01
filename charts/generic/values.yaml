@@ -100,9 +100,10 @@ fullnameOverride: ""
 #     persistentVolumeClaim:
 #       claimName: storage
 
-# serviceAccount:
-#   annotations: {}
-#   name:
+serviceAccount:
+  create: true
+  # annotations:
+  name: ""
 
 # annotations: {}
 
@@ -123,8 +124,7 @@ fullnameOverride: ""
 #     hosts:
 #       - host: chart-example.local
 #         paths:
-#           - path: /
-#             serviceName: app
+#           - serviceName: app
 #             servicePort: 80
 #     tls:
 #     - secretName: chart-example-tls

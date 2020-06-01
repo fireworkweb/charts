@@ -1,0 +1,38 @@
+generic:
+  containers:
+    - image:
+        repository: mysql
+        pullPolicy: Always
+        tag: 8.0
+      ports:
+        - containerPort: 3306
+      livenessProbe:
+        tcpSocket:
+          port: 3306
+      env:
+        - name: MYSQL_ROOT_PASSWORD
+          value: rootpass
+        - name: MYSQL_DATABASE
+          value: database
+        - name: MYSQL_USER
+          value: user
+        - name: MYSQL_PASSWORD
+          value: pass
+      # volumeMounts:
+      #   - name: default
+      #     mountPath: /var/lib/mysql
+      #     subPath: mysql
+
+  # storages:
+  #   - accessModes:
+  #       - ReadWriteOnce
+  #     size: 1Gi
+
+  # volumes:
+  #   - persistentVolumeClaim:
+  #       claimName: default
+
+  services:
+    - name: default
+      type: ClusterIP
+      port: 3306
