@@ -48,4 +48,30 @@ entries:
     urls:
     - https://github.com/fireworkweb/charts/releases/download/laravel-1.0.0/laravel-1.0.0.tgz
     version: 1.0.0
+  mysql:
+  - apiVersion: v2
+    created: "2020-06-02T00:08:36.419954145Z"
+    dependencies:
+    - name: generic
+      repository: file://../generic
+      version: 1.3.5
+    description: MySQL Helm Chart
+    digest: 043723f6f96f08d4f7908ae0d0bf387e8c56878f34f87106e4e2b912c90bf5af
+    name: mysql
+    urls:
+    - https://github.com/fireworkweb/charts/releases/download/mysql-1.0.1/mysql-1.0.1.tgz
+    version: 1.0.1
+  redis:
+  - apiVersion: v2
+    created: "2020-06-02T00:08:36.501679913Z"
+    dependencies:
+    - name: generic
+      repository: file://../generic
+      version: 1.3.5
+    description: Redis Helm Chart
+    digest: fa6905766d5edb36b8f968be2c5e7d7dd73ce5324e14e44b22a3db1b0e5c1fc9
+    name: redis
+    urls:
+    - https://github.com/fireworkweb/charts/releases/download/redis-1.0.1/redis-1.0.1.tgz
+    version: 1.0.1
 generated: "2020-05-30T15:52:25.38361657Z"
