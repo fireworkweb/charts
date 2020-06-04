@@ -10,11 +10,15 @@ spec:
     matchLabels: {{ include "generic.selectorLabels" . | nindent 6 }}
   template:
     metadata:
+      {{- if or .Values.rollme .Values.annotations }}
       annotations:
+        {{- if .Values.rollme }}
         rollme: {{ randAlphaNum 5 | quote }}
+        {{- end }}
         {{- with .Values.annotations }}
         {{ toYaml . | nindent 8 }}
         {{- end }}
+      {{- end }}
       labels: {{ include "generic.selectorLabels" . | nindent 8 }}
     spec:
       {{- with .Values.imagePullSecrets }}
@@ -26,8 +30,9 @@ spec:
       {{- end }}
       {{- if .Values.initContainers }}
       initContainers:
-        {{- range $value := .Values.initContainers }}
-        - name: {{ $value.name | default "default" }}
+        {{- range $key, $value := .Values.initContainers }}
+        {{- if or (not (hasKey $value "enabled")) ($value.enabled) }}
+        - name: {{ $key }}
           image: "{{ $value.image.repository }}:{{ $value.image.tag }}"
           {{- with $value.command }}
           command: {{ . | toJson }}
@@ -67,21 +72,23 @@ spec:
           resources: {{ toYaml . | nindent 12 }}
           {{- end }}
         {{- end }}
+        {{- end }}
       {{- end }}
       containers:
-        {{- range $value := .Values.containers }}
-        - name: {{ $value.name | default "default" }}
+        {{- range $key, $value := .Values.containers }}
+        {{- if or (not (hasKey $value "enabled")) ($value.enabled) }}
+        - name: {{ $key }}
           image: "{{ $value.image.repository }}:{{ $value.image.tag }}"
           imagePullPolicy: {{ $value.image.pullPolicy }}
-          ports: {{ toYaml $value.ports | nindent 12 }}
-          livenessProbe: {{ toYaml $value.livenessProbe | nindent 12 }}
-          readinessProbe: {{ toYaml ($value.readinessProbe | default $value.livenessProbe) | nindent 12 }}
           {{- with $value.command }}
           command: {{ . | toJson }}
           {{- end }}
           {{- with $value.args }}
           args: {{ . | toJson }}
           {{- end }}
+          ports: {{ toYaml $value.ports | nindent 12 }}
+          livenessProbe: {{ toYaml $value.livenessProbe | nindent 12 }}
+          readinessProbe: {{ toYaml ($value.readinessProbe | default $value.livenessProbe) | nindent 12 }}
           {{- with $value.securityContext }}
           securityContext: {{ toYaml . | nindent 12 }}
           {{- end }}
@@ -116,6 +123,7 @@ spec:
           {{- with $value.resources }}
           resources: {{ toYaml . | nindent 12 }}
           {{- end }}
+      {{- end }}
       {{- end }}
       {{- with .Values.volumes }}
       volumes:

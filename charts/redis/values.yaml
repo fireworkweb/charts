@@ -1,6 +1,9 @@
 generic:
+  nameOverride: redis
+
   containers:
-    - image:
+    default:
+      image:
         repository: redis
         pullPolicy: Always
         tag: 5.0-alpine
@@ -15,18 +18,15 @@ generic:
       #     subPath: redis
 
   # storages:
-  #   - name: default
-  #     accessModes:
+  #   - accessModes:
   #       - ReadWriteOnce
   #     size: 1Gi
 
   # volumes:
-  #   - name: default
-  #     persistentVolumeClaim:
+  #   - persistentVolumeClaim:
   #       claimName: default
 
   services:
-    - name: default
+    default:
       type: ClusterIP
       port: 6379
-      targetPort: 6379

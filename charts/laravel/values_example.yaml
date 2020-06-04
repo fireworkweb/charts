@@ -1,0 +1,82 @@
+mysql:
+  enabled: true
+
+  generic:
+    containers:
+      default:
+        args: ["--default-authentication-plugin=mysql_native_password"]
+
+    services:
+      default:
+        fullName: mysql
+
+redis:
+  enabled: true
+
+  generic:
+    services:
+      default:
+        fullName: redis
+
+generic:
+  # imagePullSecrets:
+  #   - name: # REQUIRED VALUE #
+
+  initContainers:
+    migrate:
+      image:
+        repository: # REQUIRED VALUE #
+        pullPolicy: Always
+        tag: # REQUIRED VALUE #
+      args: ["php", "artisan", "migrate:fresh", "--force", "--step", "--seed"]
+
+  containers:
+    app:
+      image:
+        repository: # REQUIRED VALUE #
+        pullPolicy: Always
+        tag: # REQUIRED VALUE #
+    http:
+      image:
+        repository: # REQUIRED VALUE #
+        pullPolicy: Always
+        tag: # REQUIRED VALUE #
+    worker:
+      # enabled: false
+      image:
+        repository: # REQUIRED VALUE #
+        pullPolicy: Always
+        tag: # REQUIRED VALUE #
+
+  secrets:
+    - name: env
+      data:
+        APP_NAME: "Laravel Example"
+        APP_ENV: "develop"
+        APP_KEY: # REQUIRED VALUE #
+        APP_DEBUG: "true"
+        APP_URL: # REQUIRED VALUE #
+        LOG_CHANNEL: "stderr"
+        DB_HOST: "mysql"
+        DB_PORT: "3306"
+        DB_DATABASE: "database"
+        DB_USERNAME: "user"
+        DB_PASSWORD: "pass"
+        CACHE_DRIVER: "redis"
+        QUEUE_CONNECTION: "redis"
+        SESSION_DRIVER: "redis"
+        REDIS_HOST: "redis"
+        REDIS_PORT: "6379"
+
+  ingresses:
+    - hosts:
+        - host: # REQUIRED VALUE #
+          paths:
+            - serviceName: default
+              servicePort: 80
+      # annotations:
+      #   kubernetes.io/ingress.class: nginx
+      # tls:
+      #   - secretName: # REQUIRED VALUE #
+      #     hosts:
+      #       - # REQUIRED VALUE #

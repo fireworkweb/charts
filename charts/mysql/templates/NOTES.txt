@@ -1,16 +1,16 @@
-{{- if .Values.ingresses }}
+{{- if .Values.generic.ingresses }}
   Ingresses:
-  {{- range $ingress := .Values.ingresses }}
+  {{- range $ingress := .Values.generic.ingresses }}
     {{- range $host := .hosts }}
       {{- range .paths }}
       http{{ if $ingress.tls }}s{{ end }}://{{ $host.host }}{{ .path }}
       {{- end }}
     {{- end }}
   {{- end }}
-{{- else if .Values.services }}
+{{- else if .Values.generic.services }}
   Services:
-  {{- $fullName := include "generic.fullname" . -}}
-  {{- range $service := .Values.services }}
+  {{- $fullName := include "mysql.fullname" . -}}
+  {{- range $service := .Values.generic.services }}
     {{- if .fullName }}
     {{ .fullName }}
     {{- else }}

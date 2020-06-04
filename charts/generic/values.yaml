@@ -3,9 +3,10 @@ replicaCount: 1
 # imagePullSecrets:
 nameOverride: ""
 fullnameOverride: ""
+roolme: false
 
 # initContainers:
-#   - name: init
+#   init:
 #     image:
 #       repository: nginx
 #       pullPolicy: Always
@@ -33,7 +34,7 @@ fullnameOverride: ""
 #     #     memory: 128Mi
 
 # containers:
-#   - name: app
+#   app:
 #     image:
 #       repository: nginx
 #       pullPolicy: Always
@@ -111,10 +112,11 @@ serviceAccount:
 #   fsGroup: 2000
 
 # services:
-#   - name: app
+#   default:
+#     # fullName:
 #     type: ClusterIP
 #     port: 80
-#     targetPort: 80
+#     # targetPort: 80
 
 # ingresses:
 #   - name: app

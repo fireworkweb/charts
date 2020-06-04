@@ -1,14 +1,27 @@
 mysql:
-  # asdadsa:
+  enabled: false
+  generic:
+    serviceAccount:
+      create: false
+    # containers:
+    #   default:
+    #     args: ["--default-authentication-plugin=mysql_native_password"]
 
 redis:
-  # asdadsa:
+  enabled: false
+  generic:
+    serviceAccount:
+      create: false
 
 generic:
-  # imagePullSecrets:
+  nameOverride: laravel
+  rollme: true
+
+  serviceAccount:
+    create: false
 
   initContainers:
-    # - name: init-storage
+    # initStorage:
     #   image:
     #     repository:
     #     pullPolicy: Always
@@ -21,7 +34,7 @@ generic:
     #     - name: storage
     #       mountPath: /tmp/storage
     #       subPath: storage
-    - name: migrate
+    migrate:
       image:
         repository:
         pullPolicy: Always
@@ -36,7 +49,7 @@ generic:
       #     subPath: storage
 
   containers:
-    - name: app
+    app:
       image:
         repository:
         pullPolicy: Always
@@ -53,7 +66,7 @@ generic:
       #   - name: storage
       #     mountPath: /app/storage
       #     subPath: storage
-    - name: http
+    http:
       image:
         repository:
         pullPolicy: Always
@@ -70,7 +83,8 @@ generic:
       #   - name: storage
       #     mountPath: /app/storage
       #     subPath: storage
-    - name: worker
+    worker:
+      # enabled: false
       image:
         repository:
         pullPolicy: Always
@@ -106,7 +120,8 @@ generic:
   #       claimName: storage
 
   services:
-    - type: ClusterIP
+    default:
+      type: ClusterIP
       port: 80
 
   # ingresses:

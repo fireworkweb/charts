@@ -2,21 +2,21 @@
 {{- $fullName := include "generic.fullname" . -}}
 {{- $labels := include "generic.labels" . -}}
 {{- $selectorLabels := include "generic.selectorLabels" . -}}
-{{- range $service := .Values.services }}
+{{- range $serviceName, $service := .Values.services }}
 apiVersion: v1
 kind: Service
 metadata:
-  {{- if .fullName }}
-  name: {{ .fullName }}
+  {{- if $service.fullName }}
+  name: {{ $service.fullName }}
   {{- else }}
-  name: "{{ $fullName }}-{{ .name | default "default" }}"
+  name: "{{ $fullName }}-{{ $serviceName | default "default" }}"
   {{- end }}
   labels: {{ $labels | nindent 4 }}
 spec:
-  type: {{ .type }}
+  type: {{ $service.type }}
   ports:
-    - port: {{ .port }}
-      targetPort: {{ .targetPort | default .port }}
+    - port: {{ $service.port }}
+      targetPort: {{ $service.targetPort | default $service.port }}
   selector: {{ $selectorLabels | nindent 4 }}
 ---
 {{- end }}
