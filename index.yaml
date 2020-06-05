@@ -43,6 +43,26 @@ entries:
     version: 1.3.2
   laravel:
   - apiVersion: v2
+    created: "2020-06-05T15:08:54.660085325Z"
+    dependencies:
+    - name: generic
+      repository: file://../1-generic
+      version: 1.4.2
+    - condition: mysql.enabled
+      name: mysql
+      repository: file://../5-mysql
+      version: 1.1.2
+    - condition: redis.enabled
+      name: redis
+      repository: file://../5-redis
+      version: 1.1.2
+    description: Laravel Helm Chart
+    digest: 569bdb435a49783d1bdf78e18a23a29374c6e82b42112e07979f87c47abb5ccf
+    name: laravel
+    urls:
+    - https://github.com/fireworkweb/charts/releases/download/laravel-1.1.3/laravel-1.1.3.tgz
+    version: 1.1.3
+  - apiVersion: v2
     created: "2020-06-05T02:56:19.40480464Z"
     dependencies:
     - name: generic
