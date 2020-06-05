@@ -36,7 +36,7 @@ spec:
               {{- if .fullServiceName }}
               serviceName: {{ .fullServiceName }}
               {{- else }}
-              serviceName: "{{ $fullName }}-{{ .serviceName }}"
+              serviceName: "{{ $fullName }}-{{ .serviceName | default "default" }}"
               {{- end }}
               servicePort: {{ .servicePort }}
           {{- end }}
