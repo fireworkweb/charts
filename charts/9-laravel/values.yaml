@@ -27,19 +27,20 @@ generic:
     create: false
 
   initContainers:
-    # initStorage:
-    #   image:
-    #     repository:
-    #     pullPolicy: Always
-    #     tag:
-    #   command: ["/bin/sh", "-c", "cp -r /app/storage/* /tmp/storage/ && chown -R fwd. /tmp/storage"]
-    #   envFrom:
-    #     - secretRef:
-    #         name: env
-    #   volumeMounts:
-    #     - name: storage
-    #       mountPath: /tmp/storage
-    #       subPath: storage
+    initStorage:
+      enabled: false
+      image:
+        repository:
+        pullPolicy: Always
+        tag:
+      command: ["/bin/sh", "-c", "cp -r /app/storage/* /tmp/storage/ && chown -R fwd. /tmp/storage"]
+      envFrom:
+        - secretRef:
+            name: env
+      # volumeMounts:
+      #   - name: storage
+      #     mountPath: /tmp/storage
+      #     subPath: storage
     migrate:
       image:
         repository:
@@ -90,7 +91,7 @@ generic:
       #     mountPath: /app/storage
       #     subPath: storage
     worker:
-      # enabled: false
+      enabled: false
       image:
         repository:
         pullPolicy: Always
