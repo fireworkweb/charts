@@ -3,6 +3,8 @@ replicaCount: 1
 # imagePullSecrets:
 nameOverride: ""
 fullnameOverride: ""
+# strategy:
+#   type: Recreate
 roolme: false
 
 # initContainers:

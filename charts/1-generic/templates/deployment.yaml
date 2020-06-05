@@ -8,6 +8,9 @@ spec:
   replicas: {{ .Values.replicaCount }}
   selector:
     matchLabels: {{ include "generic.selectorLabels" . | nindent 6 }}
+  {{- with .Values.strategy }}
+  strategy: {{ toYaml . | nindent 4 }}
+  {{- end }}
   template:
     metadata:
       {{- if or .Values.rollme .Values.annotations }}

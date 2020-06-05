@@ -2,6 +2,8 @@ mysql:
   enabled: true
 
   generic:
+    # strategy:
+    #   type: Recreate
     containers:
       default:
         args: ["--default-authentication-plugin=mysql_native_password"]
@@ -14,6 +16,8 @@ redis:
   enabled: true
 
   generic:
+    # strategy:
+    #   type: Recreate
     services:
       default:
         fullName: redis
@@ -21,6 +25,8 @@ redis:
 generic:
   # imagePullSecrets:
   #   - name: # REQUIRED VALUE #
+  # strategy:
+  #   type: Recreate
 
   initContainers:
     migrate:
