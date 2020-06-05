@@ -5,12 +5,12 @@ version: 1.1.1
 dependencies:
 - name: generic
   version: 1.4.1
-  repository: "file://../generic"
+  repository: "file://../1-generic"
 - name: mysql
   condition: mysql.enabled
   version: 1.1.1
-  repository: "file://../mysql"
+  repository: "file://../5-mysql"
 - name: redis
   condition: redis.enabled
   version: 1.1.1
-  repository: "file://../redis"
+  repository: "file://../5-redis"
