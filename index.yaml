@@ -182,6 +182,18 @@ entries:
     version: 1.0.0
   mysql:
   - apiVersion: v2
+    created: "2020-06-05T16:45:21.22512799Z"
+    dependencies:
+    - name: generic
+      repository: https://fireworkweb.github.io/charts
+      version: 1.4.3
+    description: MySQL Helm Chart
+    digest: 5ea5022ae21c2b1bffa2c9d4461ec22de9cca37e5703df467daad0da6c1681fc
+    name: mysql
+    urls:
+    - https://github.com/fireworkweb/charts/releases/download/mysql-1.1.3/mysql-1.1.3.tgz
+    version: 1.1.3
+  - apiVersion: v2
     created: "2020-06-05T02:56:19.495846475Z"
     dependencies:
     - name: generic
