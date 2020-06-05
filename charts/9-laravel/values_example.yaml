@@ -29,7 +29,7 @@ generic:
   #   type: Recreate
 
   initContainers:
-    migrate:
+    5-migrate:
       image:
         repository: # REQUIRED VALUE #
         pullPolicy: Always

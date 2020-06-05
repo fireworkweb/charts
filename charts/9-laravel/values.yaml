@@ -27,7 +27,7 @@ generic:
     create: false
 
   initContainers:
-    initStorage:
+    1-storage:
       enabled: false
       image:
         repository:
@@ -41,7 +41,7 @@ generic:
       #   - name: storage
       #     mountPath: /tmp/storage
       #     subPath: storage
-    migrate:
+    5-migrate:
       image:
         repository:
         pullPolicy: Always
