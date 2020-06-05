@@ -2,6 +2,14 @@ apiVersion: v1
 entries:
   generic:
   - apiVersion: v2
+    created: "2020-06-05T01:01:13.773739307Z"
+    description: Generic Chart
+    digest: 95b5ab396863a468c87b668895aa5f58a2c958dc664d1dc40dd062db71c7beda
+    name: generic
+    urls:
+    - https://github.com/fireworkweb/charts/releases/download/generic-1.4.1/generic-1.4.1.tgz
+    version: 1.4.1
+  - apiVersion: v2
     created: "2020-06-04T22:53:15.569942948Z"
     description: Generic Chart
     digest: e34ac16ccaba4de7b84c6636f36032ba79182d5c817fd37acb6ff0ffb71b793e
@@ -26,6 +34,26 @@ entries:
     - https://github.com/fireworkweb/charts/releases/download/generic-1.3.2/generic-1.3.2.tgz
     version: 1.3.2
   laravel:
+  - apiVersion: v2
+    created: "2020-06-05T01:01:13.878074197Z"
+    dependencies:
+    - name: generic
+      repository: file://../1-generic
+      version: 1.4.1
+    - condition: mysql.enabled
+      name: mysql
+      repository: file://../5-mysql
+      version: 1.1.1
+    - condition: redis.enabled
+      name: redis
+      repository: file://../5-redis
+      version: 1.1.1
+    description: Laravel Helm Chart
+    digest: dec32c1e0bb052ce217579fa54cdb7e0ad185902c8acea1f0164b6e9e2ed2097
+    name: laravel
+    urls:
+    - https://github.com/fireworkweb/charts/releases/download/laravel-1.1.1/laravel-1.1.1.tgz
+    version: 1.1.1
   - apiVersion: v2
     created: "2020-06-04T22:53:15.671118174Z"
     dependencies:
@@ -78,6 +106,18 @@ entries:
     version: 1.0.0
   mysql:
   - apiVersion: v2
+    created: "2020-06-05T01:01:13.981804478Z"
+    dependencies:
+    - name: generic
+      repository: file://../1-generic
+      version: 1.4.1
+    description: MySQL Helm Chart
+    digest: be352535c33e3ece631b3a20a06de4a2f766d8fd96d1b91d2e28e15c94716e32
+    name: mysql
+    urls:
+    - https://github.com/fireworkweb/charts/releases/download/mysql-1.1.1/mysql-1.1.1.tgz
+    version: 1.1.1
+  - apiVersion: v2
     created: "2020-06-04T22:53:15.760855046Z"
     dependencies:
     - name: generic
@@ -102,6 +142,18 @@ entries:
     - https://github.com/fireworkweb/charts/releases/download/mysql-1.0.1/mysql-1.0.1.tgz
     version: 1.0.1
   redis:
+  - apiVersion: v2
+    created: "2020-06-05T01:01:14.067878256Z"
+    dependencies:
+    - name: generic
+      repository: file://../1-generic
+      version: 1.4.1
+    description: Redis Helm Chart
+    digest: 46d09a996ac94fbce120fd34c8ff4b13ac27c88655247c2d1e245c415366202d
+    name: redis
+    urls:
+    - https://github.com/fireworkweb/charts/releases/download/redis-1.1.1/redis-1.1.1.tgz
+    version: 1.1.1
   - apiVersion: v2
     created: "2020-06-04T22:53:15.844735384Z"
     dependencies:
