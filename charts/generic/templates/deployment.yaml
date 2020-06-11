@@ -131,25 +131,26 @@ spec:
       {{- with .Values.volumes }}
       volumes:
         {{- range $volume := . }}
-        {{- if $volume.configMap }}
         - name: {{ .name }}
+          {{- if $volume.configMap }}
           configMap:
             {{- if $volume.configMap.fullName }}
             name: {{ $volume.configMap.fullName }}
             {{- else }}
             name: "{{ $fullName }}-{{ $volume.configMap.name }}"
             {{- end }}
-        {{- else if $volume.persistentVolumeClaim }}
-        - name: {{ .name }}
+          {{- else if $volume.persistentVolumeClaim }}
           persistentVolumeClaim:
             {{- if $volume.persistentVolumeClaim.fullClaimName }}
             claimName: {{ $volume.persistentVolumeClaim.fullClaimName }}
             {{- else }}
             claimName: "{{ $fullName }}-{{ $volume.persistentVolumeClaim.claimName }}"
             {{- end }}
-        {{- else }}
-        - {{ toYaml . | indent 10 }}
-        {{- end }}
+          {{- else if $volume.hostPath }}
+          hostPath: {{ toYaml .hostPath | nindent 12 }}
+          {{- else }}
+{{ toYaml . | indent 10 }}
+          {{- end }}
         {{- end }}
       {{- end }}
       {{- with .Values.nodeSelector }}

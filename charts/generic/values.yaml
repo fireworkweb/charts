@@ -12,7 +12,7 @@ roolme: false
 #     image:
 #       repository: nginx
 #       pullPolicy: Always
-#       tag: "latest"
+#       tag: latest
 #     # command: []
 #     # args: []
 #     # env:
@@ -40,7 +40,7 @@ roolme: false
 #     image:
 #       repository: nginx
 #       pullPolicy: Always
-#       tag: "latest"
+#       tag: latest
 #     ports:
 #     - containerPort: 80
 #     livenessProbe:
@@ -58,6 +58,37 @@ roolme: false
 #     #   readOnlyRootFilesystem: true
 #     #   runAsNonRoot: true
 #     #   runAsUser: 1000
+#     # env:
+#     #   - name: SOME_ENV
+#     #     value: "some value"
+#     # envFrom:
+#     #   - secretRef:
+#     #       name: env
+#     # volumeMounts:
+#     #   - name: config
+#     #     mountPath:
+#     #   - name: volume
+#     #     mountPath:
+#     #     subPath:
+#     # resources:
+#     #   limits:
+#     #     cpu: 100m
+#     #     memory: 128Mi
+#     #   requests:
+#     #     cpu: 100m
+#     #     memory: 128Mi
+
+# cronjobs:
+#   app:
+#     # concurrencyPolicy: Allow
+#     schedule: "* * * * *"
+#     # restartPolicy: OnFailure
+#     image:
+#       repository: nginx
+#       pullPolicy: Always
+#       tag: latest
+#     # command: []
+#     # args: []
 #     # env:
 #     #   - name: SOME_ENV
 #     #     value: "some value"
@@ -102,6 +133,9 @@ roolme: false
 #   - name: volume
 #     persistentVolumeClaim:
 #       claimName: storage
+#   - name: host
+#     hostPath:
+#       path: /path
 
 serviceAccount:
   create: true
