@@ -30,11 +30,15 @@ generic:
 
   initContainers:
     5-migrate:
+      enabled: true
       image:
         repository: # REQUIRED VALUE #
         pullPolicy: Always
         tag: # REQUIRED VALUE #
       args: ["php", "artisan", "migrate:fresh", "--force", "--step", "--seed"]
+      envFrom:
+        - secretRef:
+            name: env
 
   containers:
     app:
@@ -42,17 +46,40 @@ generic:
         repository: # REQUIRED VALUE #
         pullPolicy: Always
         tag: # REQUIRED VALUE #
+      envFrom:
+        - secretRef:
+            name: env
     http:
       image:
         repository: # REQUIRED VALUE #
         pullPolicy: Always
         tag: # REQUIRED VALUE #
+      envFrom:
+        - secretRef:
+            name: env
     worker:
-      # enabled: false
+      # enabled: true
       image:
         repository: # REQUIRED VALUE #
         pullPolicy: Always
         tag: # REQUIRED VALUE #
+      envFrom:
+        - secretRef:
+            name: env
+
+  cronjobs:
+    schedule:
+      # enabled: true
+      concurrencyPolicy: Allow
+      schedule: "* * * * *"
+      restartPolicy: Never
+      image:
+        repository: # REQUIRED VALUE #
+        pullPolicy: Always
+        tag: # REQUIRED VALUE #
+      envFrom:
+        - secretRef:
+            name: env
 
   secrets:
     - name: env
