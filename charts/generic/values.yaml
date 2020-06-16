@@ -5,7 +5,7 @@ nameOverride: ""
 fullnameOverride: ""
 # strategy:
 #   type: Recreate
-roolme: false
+rollme: false
 
 # initContainers:
 #   init:
