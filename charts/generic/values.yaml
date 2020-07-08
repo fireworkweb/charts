@@ -109,6 +109,38 @@ rollme: false
 #     #     cpu: 100m
 #     #     memory: 128Mi
 
+# jobs:
+#   job:
+#     hook: post-install,post-upgrade
+#     # hookWeight: -5
+#     hookDeletePolicy: hook-succeeded
+#     # restartPolicy: Never
+#     image:
+#       repository: nginx
+#       pullPolicy: Always
+#       tag: latest
+#     # command: []
+#     # args: []
+#     # env:
+#     #   - name: SOME_ENV
+#     #     value: "some value"
+#     # envFrom:
+#     #   - secretRef:
+#     #       name: env
+#     # volumeMounts:
+#     #   - name: config
+#     #     mountPath:
+#     #   - name: volume
+#     #     mountPath:
+#     #     subPath:
+#     # resources:
+#     #   limits:
+#     #     cpu: 100m
+#     #     memory: 128Mi
+#     #   requests:
+#     #     cpu: 100m
+#     #     memory: 128Mi
+
 # configMaps:
 #   - name: nginx
 #     data:
