@@ -59,25 +59,25 @@ spec:
           {{- end }}
           {{- with $job.envFrom }}
           envFrom:
-          {{- range $envFrom := . }}
-          {{- if $envFrom.secretRef }}
-          - secretRef:
-              {{- if $envFrom.secretRef.fullName }}
-              name: {{ $envFrom.secretRef.fullName }}
-              {{- else }}
-              name: "{{ $fullName }}-{{ $envFrom.secretRef.name }}"
-              {{- end }}
-          {{- else if $envFrom.configMapRef }}
-          - configMapRef:
-              {{- if $envFrom.configMapRef.fullName }}
-              name: {{ $envFrom.configMapRef.fullName }}
-              {{- else }}
-              name: "{{ $fullName }}-{{ $envFrom.configMapRef.name }}"
-              {{- end }}
-          {{- else }}
-          - {{ toYaml . | indent 14 }}
-          {{- end }}
-          {{- end }}
+            {{- range $envFrom := . }}
+            {{- if $envFrom.secretRef }}
+            - secretRef:
+                {{- if $envFrom.secretRef.fullName }}
+                name: {{ $envFrom.secretRef.fullName }}
+                {{- else }}
+                name: "{{ $fullName }}-{{ $envFrom.secretRef.name }}"
+                {{- end }}
+            {{- else if $envFrom.configMapRef }}
+            - configMapRef:
+                {{- if $envFrom.configMapRef.fullName }}
+                name: {{ $envFrom.configMapRef.fullName }}
+                {{- else }}
+                name: "{{ $fullName }}-{{ $envFrom.configMapRef.name }}"
+                {{- end }}
+            {{- else }}
+            - {{ toYaml . | indent 14 }}
+            {{- end }}
+            {{- end }}
           {{- end }}
           {{- with $job.volumeMounts }}
           volumeMounts: {{ toYaml . | nindent 12 }}
@@ -91,18 +91,18 @@ spec:
         - name: {{ .name | default "default" }}
           {{- if $volume.configMap }}
           configMap:
-          {{- if $volume.configMap.fullName }}
-          name: {{ $volume.configMap.fullName }}
-          {{- else }}
-          name: "{{ $fullName }}-{{ $volume.configMap.name }}"
-          {{- end }}
+            {{- if $volume.configMap.fullName }}
+            name: {{ $volume.configMap.fullName }}
+            {{- else }}
+            name: "{{ $fullName }}-{{ $volume.configMap.name }}"
+            {{- end }}
           {{- else if $volume.persistentVolumeClaim }}
           persistentVolumeClaim:
-          {{- if $volume.persistentVolumeClaim.fullClaimName }}
-          claimName: {{ $volume.persistentVolumeClaim.fullClaimName }}
-          {{- else }}
-          claimName: "{{ $fullName }}-{{ $volume.persistentVolumeClaim.claimName }}"
-          {{- end }}
+            {{- if $volume.persistentVolumeClaim.fullClaimName }}
+            claimName: {{ $volume.persistentVolumeClaim.fullClaimName }}
+            {{- else }}
+            claimName: "{{ $fullName }}-{{ $volume.persistentVolumeClaim.claimName }}"
+            {{- end }}
           {{- else if $volume.hostPath }}
           hostPath: {{ toYaml .hostPath | nindent 12 }}
           {{- else }}
