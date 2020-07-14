@@ -12,13 +12,13 @@ metadata:
   {{- end }}
   labels: {{ include "generic.labels" $ | nindent 4 }}
   annotations:
-    {{- with $jobName.hook }}
+    {{- with $job.hook }}
     "helm.sh/hook": {{ . }}
     {{- end }}
-    {{- with $jobName.hookWeight }}
+    {{- with $job.hookWeight }}
     "helm.sh/hook-weight": {{ . }}
     {{- end }}
-    {{- with $jobName.hookDeletePolicy }}
+    {{- with $job.hookDeletePolicy }}
     "helm.sh/hook-delete-policy": {{ . }} # hook-succeeded
     {{- end }}
 spec:
