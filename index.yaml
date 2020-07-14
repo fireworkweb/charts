@@ -2,6 +2,14 @@ apiVersion: v1
 entries:
   generic:
   - apiVersion: v2
+    created: "2020-07-14T01:32:06.3804171Z"
+    description: Generic Chart
+    digest: ace186db39274500bf76d6be833f11ef51492abbb2d2dcd874f34d2d4712393e
+    name: generic
+    urls:
+    - https://github.com/fireworkweb/charts/releases/download/generic-1.6.1/generic-1.6.1.tgz
+    version: 1.6.1
+  - apiVersion: v2
     created: "2020-07-08T21:06:49.046648972Z"
     description: Generic Chart
     digest: 9fdee51e6e6a27f32c00373f6b75e2c85e99c9b3bf3deaae91c554ab0f40e07b
