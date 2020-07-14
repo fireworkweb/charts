@@ -77,7 +77,7 @@ spec:
           {{- with $.Values.volumes }}
           volumes:
             {{- range $volume := . }}
-            - name: {{ .name }}
+            - name: {{ .name | default "default" }}
               {{- if $volume.configMap }}
               configMap:
                 {{- if $volume.configMap.fullName }}

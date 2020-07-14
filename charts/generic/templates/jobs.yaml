@@ -13,13 +13,13 @@ metadata:
   labels: {{ include "generic.labels" $ | nindent 4 }}
   annotations:
     {{- with $jobName.hook }}
-    helm.sh/hook: {{ . }}
+    "helm.sh/hook": {{ . }}
     {{- end }}
     {{- with $jobName.hookWeight }}
-    helm.sh/hook-weight: {{ . }}
+    "helm.sh/hook-weight": {{ . }}
     {{- end }}
     {{- with $jobName.hookDeletePolicy }}
-    helm.sh/hook-delete-policy: {{ . }} # hook-succeeded
+    "helm.sh/hook-delete-policy": {{ . }} # hook-succeeded
     {{- end }}
 spec:
   template:
@@ -88,7 +88,7 @@ spec:
       {{- with $.Values.volumes }}
       volumes:
       {{- range $volume := . }}
-      - name: {{ .name }}
+      - name: {{ .name | default "default" }}
           {{- if $volume.configMap }}
           configMap:
           {{- if $volume.configMap.fullName }}
