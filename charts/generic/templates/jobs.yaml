@@ -37,9 +37,9 @@ spec:
       serviceAccountName: {{ include "generic.serviceAccountName" $ }}
       {{- with $.Values.securityContext }}
       securityContext: {{ toYaml . | nindent 8 }}
+      {{- end }}
       {{- with $job.restartPolicy }}
       restartPolicy: {{ . }}
-      {{- end }}
       {{- end }}
       containers:
         - name: {{ $job.name | default $jobName }}
