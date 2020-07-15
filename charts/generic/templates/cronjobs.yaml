@@ -33,7 +33,7 @@ spec:
           containers:
             - name: {{ $cronjob.name | default $cronjobName }}
               image: "{{ $cronjob.image.repository }}:{{ $cronjob.image.tag }}"
-              imagePullPolicy: {{ $cronjob.image.pullPolicy }}
+              imagePullPolicy: {{ $cronjob.image.pullPolicy | default "Always" }}
               {{- with $cronjob.command }}
               command: {{ . | toJson }}
               {{- end }}

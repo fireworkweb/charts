@@ -44,7 +44,7 @@ spec:
       containers:
         - name: {{ $job.name | default $jobName }}
           image: "{{ $job.image.repository }}:{{ $job.image.tag }}"
-          imagePullPolicy: {{ $job.image.pullPolicy }}
+          imagePullPolicy: {{ $job.image.pullPolicy | default "Always" }}
           {{- with $job.command }}
           command: {{ . | toJson }}
           {{- end }}

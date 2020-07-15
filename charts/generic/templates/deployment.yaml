@@ -37,6 +37,7 @@ spec:
         {{- if or (not (hasKey $value "enabled")) ($value.enabled) }}
         - name: {{ $key }}
           image: "{{ $value.image.repository }}:{{ $value.image.tag }}"
+          imagePullPolicy: {{ $value.image.pullPolicy | default "Always" }}
           {{- with $value.command }}
           command: {{ . | toJson }}
           {{- end }}
@@ -82,7 +83,7 @@ spec:
         {{- if or (not (hasKey $value "enabled")) ($value.enabled) }}
         - name: {{ $key }}
           image: "{{ $value.image.repository }}:{{ $value.image.tag }}"
-          imagePullPolicy: {{ $value.image.pullPolicy }}
+          imagePullPolicy: {{ $value.image.pullPolicy | default "Always" }}
           {{- with $value.command }}
           command: {{ . | toJson }}
           {{- end }}
