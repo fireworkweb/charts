@@ -448,6 +448,26 @@ entries:
     version: 1.0.1
   wordpress:
   - apiVersion: v2
+    created: "2020-07-25T17:07:34.893354058Z"
+    dependencies:
+    - name: generic
+      repository: https://fireworkweb.github.io/charts
+      version: 1.6.7
+    - condition: mysql.enabled
+      name: mysql
+      repository: https://fireworkweb.github.io/charts
+      version: 1.1.4
+    - condition: redis.enabled
+      name: redis
+      repository: https://fireworkweb.github.io/charts
+      version: 1.1.4
+    description: Wordpress Helm Chart
+    digest: 4712447c1575f283e59645aa5911e9bb32a346d1a8bb0dc52007d77ddd4a0768
+    name: wordpress
+    urls:
+    - https://github.com/fireworkweb/charts/releases/download/wordpress-1.0.1/wordpress-1.0.1.tgz
+    version: 1.0.1
+  - apiVersion: v2
     created: "2020-07-25T16:14:26.344337845Z"
     dependencies:
     - name: generic
