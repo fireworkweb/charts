@@ -446,4 +446,25 @@ entries:
     urls:
     - https://github.com/fireworkweb/charts/releases/download/redis-1.0.1/redis-1.0.1.tgz
     version: 1.0.1
+  wordpress:
+  - apiVersion: v2
+    created: "2020-07-25T16:14:26.344337845Z"
+    dependencies:
+    - name: generic
+      repository: https://fireworkweb.github.io/charts
+      version: 1.6.7
+    - condition: mysql.enabled
+      name: mysql
+      repository: https://fireworkweb.github.io/charts
+      version: 1.1.4
+    - condition: redis.enabled
+      name: redis
+      repository: https://fireworkweb.github.io/charts
+      version: 1.1.4
+    description: Wordpress Helm Chart
+    digest: 8e9496c4d165e3026240759b83a58079f0f023a8d84814c2378d81d042e709e6
+    name: wordpress
+    urls:
+    - https://github.com/fireworkweb/charts/releases/download/wordpress-1.0.0/wordpress-1.0.0.tgz
+    version: 1.0.0
 generated: "2020-05-30T15:52:25.38361657Z"
