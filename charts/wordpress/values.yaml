@@ -4,13 +4,14 @@ mysql:
   generic:
     # strategy:
     #   type: Recreate
+
     # containers:
     #   default:
     #     args: ["--default-authentication-plugin=mysql_native_password"]
 
-    # services:
-    #   default:
-    #     fullName: mysql
+    services:
+      default:
+        fullName: mysql
 
 redis:
   enabled: false
@@ -19,9 +20,9 @@ redis:
     # strategy:
     #   type: Recreate
 
-    # services:
-    #   default:
-    #     fullName: redis
+    services:
+      default:
+        fullName: redis
 
 generic:
   nameOverride: wordpress
@@ -44,7 +45,7 @@ generic:
         - secretRef:
             name: env
       # volumeMounts:
-      #   - name: wordpress
+      #   - name: default
       #     mountPath: /var/www/html
       #     subPath: wordpress
     http:
@@ -60,11 +61,13 @@ generic:
       env:
         - name: PHP_FPM
           value: "localhost:9000"
+        - name: ROOT
+          value: "/var/www/html"
       envFrom:
         - secretRef:
             name: env
       # volumeMounts:
-      #   - name: wordpress
+      #   - name: default
       #     mountPath: /var/www/html
       #     subPath: wordpress
 
@@ -77,15 +80,14 @@ generic:
         WORDPRESS_DB_PASSWORD: "pass"
 
   # storages:
-  #   - name: wordpress
-  #     accessModes:
+  #   - accessModes:
   #       - ReadWriteOnce
   #     size: 1Gi
 
   # volumes:
-  #   - name: wordpress
+  #   - name: default
   #     persistentVolumeClaim:
-  #       claimName: wordpress
+  #       claimName: default
 
   services:
     default:
